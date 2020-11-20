@@ -1,6 +1,6 @@
 <?php
   if(isset($_COOKIE['userid'])){
-    header("location: ../index.php");
+    header("location: index.php");
     exit;
   }
 
@@ -17,7 +17,7 @@
     $username = empty($_POST['username']) ? '' : $_POST['username'];
     $password = empty($_POST['password']) ? '' : $_POST['password'];
 
-    require_once('../config/db.conf');
+    require_once('config/db.conf');
 
     if($mysqli->connect_error){
       require "createAccount.html";
@@ -37,7 +37,7 @@
     // If user insertion was successful
     if($mysqli->query($query) === TRUE){
       setcookie('userid', $username, time() + 1800, "/");
-      header('location: ../index.php');
+      header('location: index.php');
     } else {
       header('location: createAccount.html');
       echo 'Insert Error: ' . $query . '<br>' . $mysqli->error;

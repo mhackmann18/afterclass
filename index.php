@@ -11,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://kit.fontawesome.com/1b8d9746c3.js" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <link rel="stylesheet" href="./css/mainStyles.css">
+  <link rel="stylesheet" href="css/mainStyles.css">
   <title>AfterClass | MU</title>
 </head>
 <body>
@@ -19,7 +19,7 @@
   <nav id="main-navbar">
     <div class="left-nav">
       <a href="./index.php">AfterClass</a> <!-- Change to php -->
-      <img class="img-small" src="./img/mu-letters.png" alt="mu-logo">
+      <img class="img-small" src="img/mu-letters.png" alt="mu-logo">
     </div>
     <div class="right-nav">
       <ul>
@@ -38,6 +38,6 @@
     </div>
   </nav>
 
-  <script src="./javascript/navbar.js"></script>
+  <script src="javascript/navbar.js"></script>
 </body>
 </html>

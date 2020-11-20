@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../css/mainStyles.css">
+  <link rel="stylesheet" href="./css/mainStyles.css">
   <title>Log In | AfterClass MU</title>
 </head>
 <body class="flex-center">
@@ -20,7 +20,7 @@
       <input id="password" type="password" name="password" placeholder="Password" required>
       <button>Create Account</button>
     </form>
-    <p id="create-account">Already have an account? <a href="../login.html">Log In</a></p>
+    <p id="create-account">Already have an account? <a href="./login.html">Log In</a></p>
   </div>
 </body>
 </html>
