@@ -1,6 +1,7 @@
 <?php
   if(isset($_COOKIE['userid'])){
-    header("location: index.php");
+    echo "pddsd";
+    header("location: ../index.php");
     exit;
   }
 
@@ -9,6 +10,7 @@
   if($action == 'create_user'){
     create_user();
   } 
+  echo "dddddd";
 
   function create_user(){
     $email = empty($_POST['email']) ? '' : $_POST['email'];
@@ -23,4 +25,6 @@
     echo $username;
     echo $password;
   }
+
+  exit;
 ?>
