@@ -26,7 +26,7 @@
     $password = empty($_POST['password']) ? '' : $_POST['password'];
     
     // Connect to database
-    require_once("../config/db.conf");
+    require_once("./config/db.conf");
 
     // If database connection fails
     if ($mysqli->connect_error){
