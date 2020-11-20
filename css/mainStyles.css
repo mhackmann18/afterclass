@@ -1,0 +1,218 @@
+/* || GENERAL STYLES */
+
+:root {
+  --main-color: black;
+  --mu-color: #f0b410;
+  --light-main-color: #202525;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: Mulish;
+  src: url(../fonts/Mulish/Mulish-VariableFont_wght.ttf);
+}
+
+@font-face {
+  font-family: Bungee;
+  src: url(../fonts/Bungee/Bungee-Regular.ttf);
+}
+
+body {
+  font-family: Mulish;
+}
+
+button {
+  padding: 8px;
+  font-family: Mulish;
+  font-weight: 900;
+  border: none;
+  border-radius: 5px;
+}
+
+button:hover {
+  cursor: pointer;
+  filter: brightness(90%);
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+ul {
+  list-style: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
+
+hr {
+  border: 0;
+  clear:both;
+  display:block;
+  width: 96%;               
+  height: 1px;
+}
+
+/* || UTILITIES */
+
+.img-small {
+  width: 50px;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bg-lightgray {
+  background-color: lightgray;
+}
+
+.error-msg {
+  color: red;
+  font-size: 15px;
+  display: none;
+  text-align: center;
+}
+
+/* || SITEWIDE */
+
+/* Navbar */
+#main-navbar {
+  background-color: var(--main-color);
+  height: 6vw;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+#main-navbar .left-nav a {
+  color: white;
+  font-family: Bungee;
+  font-size: 2.5vw;
+  margin-right: 20px;
+  margin-left: 30px;
+}
+
+#main-navbar .left-nav {
+  align-items: center;
+  display: flex;
+}
+
+#main-navbar .right-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+#main-navbar .right-nav i {
+  padding: 28px 30px 0 30px;
+  display: block;
+  height: 100%;
+}
+
+#main-navbar .right-nav i:hover {
+  cursor: pointer;
+}
+
+#main-navbar ul {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+#main-navbar ul li {
+  padding: 0 30px;
+  color: white;
+  font-weight: 600;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#main-navbar ul li:hover {
+  filter: brightness(70%);
+}
+
+/* The menu that shows when hovering over account icon */
+#user-menu {
+  position: fixed;
+  width: 10vw;
+  height: 4vw;
+  background-color: var(--main-color);
+  top: 6vw;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  font-size: 18px;
+  display: none;
+}
+
+#main-navbar .right-nav i:hover + div {
+  display: block;
+}
+
+#user-menu:hover {
+  display: block;
+}
+
+#user-menu li {
+  padding: 14px 0;
+}
+
+/* || STORE PAGES */
+
+/* Log-in Page */
+#log-in-box {
+  width: 35vw;
+  border: 2px solid lightgray;
+  border-radius: 8px;
+  margin-top: 20vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 25px;
+}
+
+#log-in-box div {
+  display: flex;
+  margin-top: 35px;
+}
+
+#log-in-box div h1 {
+  font-family: Bungee;
+  font-size: 3vw;
+  margin-right: 10px;
+}
+
+#log-in-box form {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  margin: 40px 0;
+}
+
+#log-in-box form input {
+  margin-bottom: 20px;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid lightgray;
+  border-radius: 2px;
+}
+
+#log-in-box form button {
+  background-color: var(--mu-color);
+  height: 36px;
+}
