@@ -36,6 +36,8 @@ function checkLogin(un, pw){
   $.post('./process.php', { action: 'login', username: un, password: pw }, res => {
     if(res !== "Logged in successfully"){
       displayError(res);
+    } else {
+      window.location.replace("index.php");
     }
   });
 }

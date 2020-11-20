@@ -34,26 +34,31 @@
       exit;
     }
 
-    print "Connected Successfully.";
-    exit;
+    // Stop SQL injections
+    $username = $mysqli->real_escape_string($username);
+    $password = $mysqli->real_escape_string($password);
 
     // Get all users from the users table in database
-    $query = "SELECT * FROM users";
+    $query = "SELECT id FROM users WHERE username = '$username' AND userPassword = sha1('$password')";
+
     $result = $mysqli->query($query);
 
-    // See if the users' credentials match any registered users
-    while($row = $result->fetch_assoc()){
-      print "Row 1";
+    if($result){
+      $match = $result->num_rows;
+
+      if($match == 1){
+        setcookie('userid', $username, time() + 1800, "/");
+        print("Logged in successfully");
+      } else {
+        print("Incorrect username or password.<br>Please double-check your username and password.");
+      }
+    } else {
+      print('Error. Please contact the system administrator.');
     }
 
-    // Only set the cookie if username and password are correct
-    if($username == 'test' && $password = 'pass'){
-      setcookie('userid', $username, time() + 1800, "/");
-      $response = "Logged in successfully";
-    } else {
-      $response = "Invalid credentials";
-    }
-    print $response;
+    // while($row = $result->fetch_assoc()){
+    //   print "Row 1";
+    // }
 
     $result->close();
     $mysqli->close();
