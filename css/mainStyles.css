@@ -80,9 +80,10 @@ hr {
 }
 
 .error-msg {
+  margin-top: 15px;
   color: red;
-  font-size: 15px;
   display: none;
+  font-size: 15px;
   text-align: center;
 }
 
@@ -215,4 +216,12 @@ hr {
 #log-in-box form button {
   background-color: var(--mu-color);
   height: 36px;
+}
+
+#create-account {
+  font-size: 12px;
+}
+
+#create-account a {
+  color: gray;
 }
