@@ -7,5 +7,3 @@ logoutBtn.onclick = () => {
     window.location.replace("./login.html");
   });
 }
-
-

@@ -34,10 +34,8 @@ function displayError(msg){
 // Takes two strings, the first is for the username and the second is for the password. Checks if they exist in the database and returns true if they do, and false if they don't.
 function checkLogin(un, pw){
   $.post('./process.php', { action: 'login', username: un, password: pw }, res => {
-    if(res === "Logged in successfully"){
-      window.location.replace("./index.php");
-    } else {
-      displayError("Incorrect username or password.<br>Please double-check your username and password.");
+    if(res !== "Logged in successfully"){
+      displayError(res);
     }
   });
 }
