@@ -4,7 +4,7 @@ const logoutBtn = userMenu.querySelector("ul").firstElementChild;
 
 logoutBtn.onclick = () => {
   $.post('./process.php', { action: 'logout' }, () => {
-    window.location.replace("./login.php");
+    window.location.replace("./login.html");
   });
 }
 
