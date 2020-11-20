@@ -1,6 +1,6 @@
 <?php
   if(!isset($_COOKIE['userid'])){
-    header("location: login.html");
+    header("location: login.php");
   }
 ?>
 
