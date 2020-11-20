@@ -20,7 +20,7 @@
       <input id="password" type="password" name="password" placeholder="password">
       <button>Log In</button>
     </form>
-    <p id="create-account">Don't have an account? <a href="./html/createAccount.html">Create an account</a></p>
+    <p id="create-account">Don't have an account? <a href="./createAccount.html">Create an account</a></p>
     <!-- Error message -->
     <p class="error-msg"></p>
   </div>
