@@ -1,0 +1,3 @@
+# AfterClass MU
+
+In a post-COVID campus, it can be hard to connect with other students due to restrictions on gatherings, and social distancing rules. That's where AfterClass comes in. AfterClass is a website that serves as a one stop shop for MU students to connect with their peers, collaborate on assignments, and join and create clubs and organizations. When class is out and you're knee-deep in homework, or are having a difficult time understanding key concepts, drop in after class and join a study group, or connect with another student who's working on the same material as your are. All that's needed to join is valid MU email address.

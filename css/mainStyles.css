@@ -184,6 +184,7 @@ hr {
 /******************/
 
 /* LOGIN PAGE */
+
 .log-in-box {
   width: 35vw;
   border: 2px solid lightgray;
@@ -244,5 +245,5 @@ hr {
 }
 
 #create-user-box {
-  margin-top: 10vh;
+  margin-top: 13vh;
 }
