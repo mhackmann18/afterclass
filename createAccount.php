@@ -1,13 +1,5 @@
-<?php
-  // if($_SERVER['HTTPS'] !== 'on') {
-  //   $redirect= "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-  //   header("location: $redirect");
-  // }
-
-  header("Cache-Control: no-store, no-cache, must-revalidate, pre-check=0, post-check=0, max-age=0, s-maxage=0");
-  header("Pragma:no-cache");
-  header("Expires: 0");
-?>
+<!-- HTTPS Redirect -->
+<?php require 'REDIRECT.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,11 +12,11 @@
 </head>
 <body class="flex-center">
   <div id="create-user-box" class="log-in-box">
+
     <h1>Create New Account</h1>
     <!-- Sign up form -->
-    <form id="create-user-form" action="createUser.php" method="POST" autocomplete="off"> <!--Checkup on that action-->
-      <input type="hidden" name="action" value="create_user">
-
+    <form id="create-user-form" action="CREATEUSER.php" method="POST" autocomplete="off"> <!--Checkup on that action-->
+      <!-- <input type="hidden" name="action" value="create_user"> -->
       <input id="email" type="email" name="email" placeholder="um email" required>
       <input id="name" type="text" name="name" placeholder="full name" required>
       <input id="major" type="text" name="major" placeholder="major" required>
@@ -32,7 +24,10 @@
       <input id="password" type="password" name="password" placeholder="password" required>
       <button>Create Account</button>
     </form>
+
     <p id="create-account">Already have an account? <a href="./login.php">Log In</a></p>
+
+    <!-- Will display error message from CREATEUSER.php if the operation failed. -->
     <?php
       if($error){
         print "<p class='create-account-error'>$error</p>";
@@ -40,6 +35,7 @@
         print "<p class='create-account-error'></p>";
       }
     ?>
+
   </div>
 
   <script src="./javascript/createAccount.js?v=2"></script>

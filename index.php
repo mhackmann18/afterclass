@@ -1,16 +1,10 @@
 <?php
-  if(!isset($_COOKIE['userid'])){
+  // Redirect to login page if no login cookie exists
+  if(!isset($_COOKIE['userid']))
     header("location: login.php");
-  }
-
-  // if($_SERVER['HTTPS'] !== 'on') {
-  //   $redirect= "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-  //   header("location: $redirect");
-  // }
-
-  header("Cache-Control: no-store, no-cache, must-revalidate, pre-check=0, post-check=0, max-age=0, s-maxage=0");
-  header("Pragma:no-cache");
-  header("Expires: 0");
+  
+  // HTTPS Redirect
+  require 'REDIRECT.php';
 ?>
 
 <!DOCTYPE html>
@@ -25,9 +19,8 @@
 </head>
 <body>
   <!-- Main Navbar -->
-  <?php
-    require 'navbar.php';
-  ?>
+  <?php require 'navbar.php'; ?>
+
   <script src="./javascript/navbar.js"></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 <nav id="main-navbar">
   <div class="left-nav">
-    <a href="./index.php">AfterClass</a> <!-- Change to php -->
+    <a href="./index.php">AfterClass</a> 
     <img class="img-small" src="./img/mu-letters.png" alt="mu-logo">
   </div>
   <div class="right-nav">

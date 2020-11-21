@@ -10,7 +10,7 @@ let usernameIsValid = true;
 // Will display an error message if the email is already associated with another account.
 emailField.onkeyup = e => {
   const val = e.target.value;
-  $.post('./process.php', { action: 'check-email', email: `${val}` }, res => {
+  $.post('./PROCESS.php', { action: 'check-email', email: `${val}` }, res => {
     // Email already exists.
     if(!res){
       errorMsg.innerHTML = "Looks like that email address is already taken.<br>Please use another email address.";
@@ -27,7 +27,7 @@ emailField.onkeyup = e => {
 // Will display an error message if chosen username is already associated with another account.
 usernameField.onkeyup = e => {
   const val = e.target.value;
-  $.post('./process.php', { action: 'check-username', username: `${val}` }, res => {
+  $.post('./PROCESS.php', { action: 'check-username', username: `${val}` }, res => {
     // Username is already taken.
     if(!res){
       errorMsg.innerHTML = "Looks like that username is already taken.<br>Please enter a different username.";

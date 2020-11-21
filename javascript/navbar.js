@@ -3,7 +3,7 @@ const userMenu = document.getElementById("user-menu");
 const logoutBtn = userMenu.querySelector("ul").firstElementChild;
 
 logoutBtn.onclick = () => {
-  $.post('./process.php', { action: 'logout' }, () => {
+  $.post('./PROCESS.php', { action: 'logout' }, () => {
     window.location.replace("./login.php");
   });
 }
