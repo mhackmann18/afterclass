@@ -37,7 +37,7 @@ function checkLogin(un, pw){
     if(res !== "Logged in successfully"){
       displayError(res);
     } else {
-      window.location.replace("index.php");
+      window.location.replace("./index.php");
     }
   });
 }

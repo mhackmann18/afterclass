@@ -16,6 +16,13 @@
     } else {
       print "User is not logged in";
     }
+    // Check if email address exist in database yet.
+  } else if($action == 'check-email'){
+    check_email();
+
+  } else if($action == 'check-username'){
+    check_username();
+
   } else {
     print "You submitted an invalid action";
   }
@@ -61,6 +68,42 @@
     // }
 
     $result->close();
+    $mysqli->close();
+  }
+
+  function check_email(){
+    require_once('config/db.conf');
+
+    if($mysqli->connect_error){ exit; }
+
+    $email = empty($_POST['email']) ? '' : $_POST['email'];
+
+    $query = "SELECT id FROM users WHERE email = '$email'";
+
+    if($mysqli->query($query)->num_rows == 1){
+      print FALSE;
+    } else {
+      print TRUE;
+    }
+
+    $mysqli->close();
+  }
+
+  function check_username(){
+    require_once('config/db.conf');
+
+    if($mysqli->connect_error){ exit; }
+
+    $username = empty($_POST['username']) ? '' : $_POST['username'];
+
+    $query = "SELECT id FROM users WHERE username = '$username'";
+
+    if($mysqli->query($query)->num_rows == 1){
+      print FALSE;
+    } else {
+      print TRUE;
+    }
+
     $mysqli->close();
   }
 ?>

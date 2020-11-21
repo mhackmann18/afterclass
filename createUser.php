@@ -20,8 +20,8 @@
     require_once('config/db.conf');
 
     if($mysqli->connect_error){
-      require "createAccount.html";
-      echo "There was an issue connecting to the database";
+      $error = "There was an issue connecting to the SQL database.<br>Please try again later.";
+      require "./createAccount.php";
       exit;
     }
 
@@ -37,10 +37,15 @@
     // If user insertion was successful
     if($mysqli->query($query) === TRUE){
       setcookie('userid', $username, time() + 1800, "/");
-      header('location: index.php');
+      header('location: ./index.php');
     } else {
-      header('location: createAccount.html');
-      echo 'Insert Error: ' . $query . '<br>' . $mysqli->error;
+      $query = "SELECT id FROM users WHERE username = '$username'";
+      if($mysqli->query($query)->num_rows == 1){
+        $error = "Oops! That username is already taken.<br>Please enter a new username.";
+      } else {
+        $error = "An account already exists using that email.<br>Please use another email.";
+      }
+      require './createAccount.php';
     }
 
     $mysqli->close();

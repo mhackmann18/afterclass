@@ -1,4 +1,6 @@
+/*********************/
 /* || GENERAL STYLES */
+/*********************/
 
 :root {
   --main-color: black;
@@ -63,7 +65,9 @@ hr {
   height: 1px;
 }
 
+/****************/
 /* || UTILITIES */
+/****************/
 
 .img-small {
   width: 50px;
@@ -87,7 +91,9 @@ hr {
   text-align: center;
 }
 
+/***************/
 /* || SITEWIDE */
+/***************/
 
 /* Navbar */
 #main-navbar {
@@ -173,10 +179,12 @@ hr {
   padding: 14px 0;
 }
 
+/******************/
 /* || STORE PAGES */
+/******************/
 
-/* Log-in Page */
-#log-in-box {
+/* LOGIN PAGE */
+.log-in-box {
   width: 35vw;
   border: 2px solid lightgray;
   border-radius: 8px;
@@ -187,25 +195,25 @@ hr {
   padding: 25px;
 }
 
-#log-in-box div {
+.log-in-box div {
   display: flex;
   margin-top: 35px;
 }
 
-#log-in-box div h1 {
+.log-in-box div h1 {
   font-family: Bungee;
   font-size: 3vw;
   margin-right: 10px;
 }
 
-#log-in-box form {
+.log-in-box form {
   display: flex;
   flex-direction: column;
   width: 60%;
   margin: 40px 0;
 }
 
-#log-in-box form input {
+.log-in-box form input {
   margin-bottom: 20px;
   padding: 8px;
   font-size: 14px;
@@ -213,10 +221,12 @@ hr {
   border-radius: 2px;
 }
 
-#log-in-box form button {
+.log-in-box form button {
   background-color: var(--mu-color);
   height: 36px;
 }
+
+/* CREATE ACCOUNT PAGE */
 
 #create-account {
   font-size: 12px;
@@ -224,4 +234,15 @@ hr {
 
 #create-account a {
   color: gray;
+}
+
+.create-account-error {
+  margin-top: 15px;
+  color: red;
+  font-size: 15px;
+  text-align: center;
+}
+
+#create-user-box {
+  margin-top: 10vh;
 }

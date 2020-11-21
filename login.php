@@ -8,7 +8,7 @@
   <title>Log In | AfterClass MU</title>
 </head>
 <body class="flex-center">
-  <div id="log-in-box">
+  <div class="log-in-box">
     <!-- Container for header and MU logo -->
     <div>
       <h1>AfterClass</h1>
@@ -20,7 +20,7 @@
       <input id="password" type="password" name="password" placeholder="password">
       <button>Log In</button>
     </form>
-    <p id="create-account">Don't have an account? <a href="./createAccount.html">Create an account</a></p>
+    <p id="create-account">Don't have an account? <a href="./createAccount.php">Create an account</a></p>
     <!-- Error message -->
     <p class="error-msg"></p>
   </div>
