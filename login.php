@@ -1,3 +1,14 @@
+<?php
+  // if($_SERVER['HTTPS'] !== 'on') {
+  //   $redirect= "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+  //   header("location: $redirect");
+  // }
+
+  header("Cache-Control: no-store, no-cache, must-revalidate, pre-check=0, post-check=0, max-age=0, s-maxage=0");
+  header("Pragma:no-cache");
+  header("Expires: 0");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +27,7 @@
     </div>
     <!-- Login form -->
     <form autocomplete="off">
-      <input id="username" type="text" name="user-name" placeholder="username or email">
+      <input id="username" type="text" name="user-name" placeholder="username">
       <input id="password" type="password" name="password" placeholder="password">
       <button>Log In</button>
     </form>
