@@ -11,6 +11,7 @@ form.onsubmit = e => {
 
   e.preventDefault();
 
+  // Checks for empty fields and if fields are filled 
   if(!userString && !pwString){
     displayError("Please enter a username and password.");
   } else if(!userString){
@@ -31,9 +32,9 @@ function displayError(msg){
   errorMsg.style.display = 'block';
 }
 
-// Takes two strings, the first is for the username and the second is for the password. Checks if they exist in the database and returns true if they do, and false if they don't.
+// Takes a username string and a password string and sends them to process.php for validation. If they're valid, redirects to index.php
 function checkLogin(un, pw){
-  $.post('./PROCESS.php', { action: 'login', username: un, password: pw }, res => {
+  $.post('./php/PROCESS.php', { action: 'login', username: un, password: pw }, res => {
     if(res !== "Logged in successfully"){
       displayError(res);
     } else {

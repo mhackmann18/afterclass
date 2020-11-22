@@ -1,7 +1,9 @@
 <?php
+  $main_dir = $_SERVER["DOCUMENT_ROOT"] . "/afterclass";
+
   // Makes sure there is no user logged in
   if(isset($_COOKIE['userid'])){
-    header("location: index.php");
+    header("location: ../index.php");
     exit;
   }
 
@@ -13,12 +15,12 @@
   $password = empty($_POST['password']) ? '' : $_POST['password'];
 
   // Connect to SQL database
-  require_once('config/db.conf');
+  require_once($main_dir . "/config/db.conf");
 
   // Display error and exit if connection faied
   if($mysqli->connect_error){
     $error = "There was an issue connecting to the SQL database.<br>Please try again later.";
-    require "./createAccount.php";
+    require $main_dir . "/createAccount.php";
     exit;
   }
 
@@ -34,7 +36,7 @@
   // If user was successfully added to database, set login cookie and redirect to index.php
   if($mysqli->query($query) === TRUE){
     setcookie('userid', $username, time() + 1800, "/");
-    header('location: ./index.php');
+    header("location: ../index.php");
   } 
   // If there was an issue adding the user to database, display error and redirect to createAccount.php
   else {
@@ -46,7 +48,7 @@
     } else {
       $error = "An account already exists using that email.<br>Please use another email.";
     }
-    require './createAccount.php';
+    require $main_dir . '/createAccount.php';
   }
 
   $mysqli->close();

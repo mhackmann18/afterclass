@@ -1,9 +1,9 @@
 const userButton = document.getElementById("user-btn");
 const userMenu = document.getElementById("user-menu");
-const logoutBtn = userMenu.querySelector("ul").firstElementChild;
+const logoutBtn = document.getElementById("log-out");
 
 logoutBtn.onclick = () => {
-  $.post('./PROCESS.php', { action: 'logout' }, () => {
+  $.post('./php/PROCESS.php', { action: 'logout' }, () => {
     window.location.replace("./login.php");
   });
 }

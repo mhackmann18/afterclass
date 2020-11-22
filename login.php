@@ -1,5 +1,5 @@
 <!-- HTTPS Redirect -->
-<?php require 'REDIRECT.php'; ?>
+<?php require $_SERVER["DOCUMENT_ROOT"] . "/afterclass/php/REDIRECT.php"; ?>
 
 <!DOCTYPE html>
 <html lang="en">

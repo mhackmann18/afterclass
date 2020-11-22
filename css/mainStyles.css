@@ -59,10 +59,12 @@ button:focus {
 
 hr {
   border: 0;
+  background-color: lightgrey;
   clear:both;
   display:block;
   width: 96%;               
   height: 1px;
+  margin: 10px 0;
 }
 
 /****************/
@@ -91,15 +93,24 @@ hr {
   text-align: center;
 }
 
+/* Text Colors */
+.txt-black { color: black; }
+.txt-darkgrey { color: #333; }
+.txt-darkgray { color: #333; }
+
+/* Font-weights */
+.txt-bold { font-weight: 800; }
+.txt-thin { font-weight: 300; }
+
 /***************/
 /* || SITEWIDE */
 /***************/
 
-/* Navbar */
+/* NAVBAR */
+
 #main-navbar {
   background-color: var(--main-color);
   height: 6vw;
-  color: white;
   display: flex;
   justify-content: space-between;
   position: relative;
@@ -129,6 +140,7 @@ hr {
   padding: 28px 30px 0 30px;
   display: block;
   height: 100%;
+  color: white;
 }
 
 #main-navbar .right-nav i:hover {
@@ -143,8 +155,6 @@ hr {
 
 #main-navbar ul li {
   padding: 0 30px;
-  color: white;
-  font-weight: 600;
   font-size: 20px;
   cursor: pointer;
 }
@@ -153,18 +163,29 @@ hr {
   filter: brightness(70%);
 }
 
-/* The menu that shows when hovering over account icon */
+/* USER ICON MENU */
+
 #user-menu {
   position: fixed;
   width: 10vw;
-  height: 4vw;
-  background-color: var(--main-color);
-  top: 6vw;
-  right: 0;
+  height: auto;
+  background-color: white;
+  color: #333;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  top: 5vw;
+  right: 1vw;
   display: flex;
   justify-content: center;
   font-size: 18px;
   display: none;
+  padding: 12px;
+}
+
+#user-menu ul {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 #main-navbar .right-nav i:hover + div {
@@ -175,8 +196,14 @@ hr {
   display: block;
 }
 
-#user-menu li {
-  padding: 14px 0;
+#user-menu ul li {
+  padding: 0;
+  font-size: 16px;
+}
+
+#user-menu ul li #log-out {
+  color: black;
+  font-weight: 300;
 }
 
 /******************/
@@ -227,7 +254,7 @@ hr {
   height: 36px;
 }
 
-/* CREATE ACCOUNT PAGE */
+/* ACCOUNT CREATION PAGE */
 
 #create-account {
   font-size: 12px;

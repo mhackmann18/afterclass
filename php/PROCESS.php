@@ -1,6 +1,8 @@
 <?php 
+  $main_dir = $_SERVER["DOCUMENT_ROOT"] . "/afterclass";
+  
   $action = empty($_POST['action']) ? false : $_POST['action'];
-
+  //exit;
   if($action == 'login'){
     handle_login();
     // If logging out, delete user cookie
@@ -33,7 +35,7 @@
     $password = empty($_POST['password']) ? '' : $_POST['password'];
     
     // Connect to database
-    require_once("./config/db.conf");
+    require_once($GLOBALS["main_dir"] . "/config/db.conf");
 
     // If database connection fails
     if ($mysqli->connect_error){
@@ -72,7 +74,7 @@
   }
 
   function check_email(){
-    require_once('config/db.conf');
+    require_once($GLOBALS["main_dir"] . "/config/db.conf");
 
     if($mysqli->connect_error){ exit; }
 
@@ -90,7 +92,7 @@
   }
 
   function check_username(){
-    require_once('config/db.conf');
+    require_once($GLOBALS["main_dir"] . "/config/db.conf");
 
     if($mysqli->connect_error){ exit; }
 
