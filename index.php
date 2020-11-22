@@ -20,7 +20,5 @@
 <body>
   <!-- Main Navbar -->
   <?php require 'navbar.php'; ?>
-
-  <script src="./javascript/navbar.js"></script>
 </body>
 </html>
