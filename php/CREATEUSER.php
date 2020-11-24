@@ -33,8 +33,19 @@
 
   $query = "INSERT INTO users (fullName, email, username, userPassword, major, addDate) VALUES ('$name', '$email', '$username', sha1('$password'), '$major', now())";
 
-  // If user was successfully added to database, set login cookie and redirect to index.php
+  // If user was successfully added to database, set profile image to default, create login cookie and redirect to index.php
   if($mysqli->query($query) === TRUE){
+
+    $query = "SELECT * FROM users WHERE username = '$username'";
+    $result = $mysqli->query($query);
+
+    if($result->num_rows == 1){
+      $row = mysqli_fetch_assoc($result);
+      $userid = $row['id'];
+      $query = "INSERT INTO profileimg (userid, status) VALUES ('$userid', 1)";
+      $mysqli->query($query);
+    }
+
     setcookie('userid', $username, time() + 1800, "/");
     header("location: ../index.php");
   } 

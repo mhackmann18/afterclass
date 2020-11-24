@@ -1,13 +1,13 @@
 <nav id="main-navbar">
   <div class="left-nav">
-    <a href="./index.php">AfterClass</a> 
-    <img class="img-small" src="./img/mu-letters.png" alt="mu-logo">
+    <a href="/afterclass/index.php">AfterClass</a> 
+    <img class="img-small" src="/afterclass/img/mu-letters.png" alt="mu-logo">
   </div>
   <div class="right-nav">
     <ul>
       <!-- Navbar Links -->
-      <li><a href="#">Discover</a></li>
-      <li><a href="groups.php">Groups</a></li>
+      <li><a href="/afterclass/index.php">Home</a></li>
+      <li><a href="/afterclass/groups.php">Groups</a></li>
       <li><a href="#">Messages</a></li>
     </ul>
     <!-- Navbar User Icon -->
@@ -20,7 +20,7 @@
       </p>
       <hr>
       <ul>
-        <li><a class="txt-darkgray txt-thin" href="#">Profile</a></li>
+        <li><a class="txt-darkgray txt-thin" href="/afterclass/profile.php">Profile</a></li>
         <li><a class="txt-darkgray txt-thin" href="#">Settings</a></li>
         <li class="txt-darkgray txt-thin" id="log-out">Log Out</li>
       </ul>
@@ -28,4 +28,4 @@
   </div>
 </nav>
 
-<script src="./javascript/navbar.js"></script>
+<script src="/afterclass/javascript/navbar.js"></script>

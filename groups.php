@@ -2,6 +2,10 @@
   // Redirect to login page if no login cookie exists
   if(!isset($_COOKIE['userid']))
     header("location: login.php");
+
+  // If user is logged in, refresh the login cookie
+  $username = $_COOKIE['userid'];
+  setcookie('userid', $username, time() + 1800, "/");
   
   // HTTPS Redirect
   require $_SERVER["DOCUMENT_ROOT"] . "/afterclass/php/REDIRECT.php";
@@ -15,7 +19,7 @@
   <script src="https://kit.fontawesome.com/1b8d9746c3.js" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <link rel="stylesheet" href="./css/mainStyles.css">
-  <title>AfterClass | Groups</title>
+  <title>Groups | AfterClass MU</title>
 </head>
 <body>
   <?php require 'navbar.php'; ?>
