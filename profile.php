@@ -78,9 +78,16 @@
       <?php print '<h1 class="txt-bold">'.$userFullName.'</h1>'; ?>
       <ul id="profile-page-info">
         <?php print "<li>Email: $userEmail</li>"; ?>
-        <?php print "<li>Username: $username</li>"; ?>
-        <?php print "<li>Major: $userMajor</li>"; ?>
+        <?php print "<li>Username: <span id='username'>$username</span></li>"; ?>
+        <?php print "<li>Major: <span id='major'>$userMajor</span></li>"; ?>
       </ul>
+      <!-- Hidden input fields -->
+      <ul id="profile-page-inputs">
+        <?php print "<li>Email: $userEmail</li>"; ?>
+        <?php print "<li>Username:<input id='username-input' type='text' value='$username'></li>"; ?>
+        <?php print "<li>Major:<input id='major-input' type='text' value='$userMajor'></li>"; ?>
+      </ul>
+      <p id="input-err-msg" class="err-msg"></p>
       <button id="edit-profile-btn" class="btn-gold">Edit Profile</button>
       <!-- Save and cancel buttons only show after edit button is clicked -->
       <button id="save-edit-profile-btn" class="btn-gold">Save Changes</button>
@@ -99,6 +106,7 @@
       ?>
       <!-- Textarea is hidden until edit button is clicked -->
       <textarea id="edit-bio" cols="30" rows="6"></textarea>
+      <p id="bio-err-msg" class="err-msg"></p>
       <!-- Groups -->
       <h1 id="profile-page-groups-header">Groups</h1>
       <ul id="profile-page-groups">

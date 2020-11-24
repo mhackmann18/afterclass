@@ -104,6 +104,12 @@ hr {
   text-align: center;
 }
 
+.err-msg {
+  color: red;
+  font-size: 14px;
+  display: none;
+}
+
 /* Text Colors */
 .txt-black { color: black; }
 .txt-darkgrey { color: #333; }
@@ -307,22 +313,40 @@ hr {
   margin-top: 20px;
 }
 
-#profile-left ul#profile-page-info li {
+#profile-left li {
   padding-bottom: 10px;
 }
 
-#profile-left button#edit-profile-btn {
+ul#profile-page-inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  display: none;
+}
+
+ul#profile-page-inputs input {
+  padding: 2px;
+  font-size: 16px;
+  margin-left: 5px;
+  font-family: Mulish;
+  border: 1px solid lightgray;
+  border-radius: 2px;
+}
+
+button#edit-profile-btn {
   margin-top: 10px;
 }
 
-#cancel-edit-profile-btn {
+button#cancel-edit-profile-btn {
   padding: 12px 16px;
   font-size: 16px;
   margin-top: 8px;
   display: none;
 }
 
-#save-edit-profile-btn {
+button#save-edit-profile-btn {
+  margin-top: 10px;
   display: none;
 }
 
@@ -386,6 +410,8 @@ ul#profile-page-groups li a {
   resize: none;
   font-family: Mulish;
   font-size: 16px;
+  border: 1px solid lightgray;
+  border-radius: 2px;
 }
 
 ul#profile-page-groups li a:hover {
