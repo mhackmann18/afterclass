@@ -136,6 +136,12 @@ saveChangesBtn.onclick = function(){
   }
   // Submit to updateProfile.php
   if(canSubmit){
-    $.post("./php/updateProfile.php", { username: usernameVal, major: majorVal, bio: bioVal }, () => window.location.replace("./profile.php"));
+    $.post("./php/updateProfile.php", { username: usernameVal, major: majorVal, bio: bioVal }, res => {
+      if(res !== 'logout'){
+        window.location.replace("./profile.php");
+      } else {
+        window.location.replace("./login.php");
+      }
+    });
   }
 }

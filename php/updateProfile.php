@@ -1,7 +1,7 @@
 <?php
   // Make sure the user is logged in, redirect if not
   if(!isset($_COOKIE['userid']))
-    header("location: login.php");
+    print "logout";
   // Refresh the time on the login cookie
   $username = $_COOKIE['userid'];
   setcookie('userid', $username, time() + 1800, "/");
