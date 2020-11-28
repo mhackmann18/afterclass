@@ -97,7 +97,12 @@ function clearFields(){
 /********************************/
 
 document.querySelector("body").onload = function(){
-  $.get("/afterclass/php/PROCESS.php", { action: "get-membership-ids" }, res => JSON.parse(res).forEach(id => showGroupCard(Number(id))));
+  $.get("/afterclass/php/PROCESS.php", { action: "get-membership-ids" }, res => {
+    const ids = JSON.parse(res);
+    if(ids[0] != 0){
+      ids.forEach(id => showGroupCard(Number(id)));
+    }
+  });
 }
 
 function showGroupCard(id){
@@ -121,7 +126,6 @@ function addButtonEvents(groupDiv, id){
     overlay.style.display = "block";
     confirmLeaveGroupBtn.onclick = function(){
       $.get("./php/PROCESS.php", { action: "leave-group", groupid: id }, res => {
-        console.log(res);
         location.reload();
       });
     }
@@ -136,4 +140,3 @@ document.getElementById("leave-group-cancel-btn").onclick = function(){
   leaveGroupWindow.style.display = "none";
   overlay.style.display = "none";
 }
-

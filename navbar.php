@@ -4,11 +4,18 @@
     <img class="img-small" src="/afterclass/img/mu-letters.png" alt="mu-logo">
   </div>
   <div class="right-nav">
-    <ul>
+    <ul id="navbar-links">
       <!-- Navbar Links -->
       <li><a href="/afterclass/index.php">Home</a></li>
-      <li><a href="/afterclass/groups.php">Groups</a></li>
-      <li><a href="#">Messages</a></li>
+      <li><a href="/afterclass/groups.php">Groups</a>
+      <div class="navbar-dropdown-menu">
+        <ul>
+          <li><a href="/afterclass/groups.php">Your Groups</a></li>
+          <li><a href="/afterclass/findGroups.php">Join Groups</a></li>
+        </ul>
+      </div>
+    </li>
+      <li><a href="#">Post</a></li>
     </ul>
     <!-- Navbar User Icon -->
     <i id="user-btn" class="fas fa-2x fa-user-circle"></i>

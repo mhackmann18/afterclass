@@ -38,6 +38,12 @@
       get_group_card();
     } else if($action == 'leave-group'){
       leave_group();
+    } else if($action == 'get-no-membership-ids'){
+      get_no_membership_ids();
+    } else if($action == 'get-group-info'){
+      get_group_info();
+    } else if($action == 'add-new-membership'){
+      add_new_membership();
     } else {
       print "Invalid action submitted to process.php.";
     }
@@ -176,7 +182,7 @@
     }
 
     print json_encode($groupIds);
-
+    
     $mysqli->close();
     exit;
   }
@@ -221,7 +227,7 @@
             <li>Created: $displayDate</li>
             <li>Posts: $numPosts</li>
           </ul>
-          <button class='view-group-feed'>View Feed</button>
+          <a href='./group.php?groupid=$groupId' class='view-group-feed'>View Feed</a>
           <button class='btn-gold leave-group-btn'>Leave</button>
         </div>";
     } else {
@@ -230,6 +236,59 @@
     }
     
     $mysqli->close();
+  }
+
+  function get_no_membership_ids(){
+     // Make sure the user is logged in, redirect if not redirect to login
+     if(!isset($_COOKIE['userid'])){
+      header("location: ../login.php");
+      exit;
+    }
+
+    $username = $_COOKIE['userid'];
+
+    require_once "../config/db.conf";
+
+    if($mysqli->connect_error){
+      print "There was an issue connecting to the database.<br>Please try again later.";
+      exit;
+    }
+
+    // Get current user's id
+    $query = "SELECT * FROM users WHERE username = '$username'";
+    $result = $mysqli->query($query);
+    if($result->num_rows == 1){
+      $row = mysqli_fetch_assoc($result);
+      $userId = $row['id'];
+    }
+
+    // Get group memberships
+    $query = "SELECT groupid FROM groupMemberships WHERE userid = $userId";
+
+    $result = $mysqli->query($query);
+
+    $nonMemberIds = array();
+
+    if($result->num_rows > 0){
+      // Build a query string that selects all groups the user is not currently a member of
+      $mustNotEqual = "";
+      while($row = mysqli_fetch_assoc($result)) {
+        $mustNotEqual .= " AND id != ".$row['groupid'];
+      }
+
+      $query = "SELECT id FROM organizations WHERE id != -1".$mustNotEqual;
+      // Get group ids where the user isn't a member
+      $result = $mysqli->query($query);
+
+      while($row = mysqli_fetch_assoc($result)) {
+        $nonMemberIds[] = $row['id'];
+      }
+    }
+
+    print json_encode($nonMemberIds);
+
+    $mysqli->close();
+    exit;
   }
 
   function leave_group(){
@@ -277,8 +336,7 @@
           print "There was a problem deleting the group.";
         }
       } else {
-        $numMembers -= 1;
-        $query = "UPDATE organizations SET members = $numMembers WHERE id = $groupId";
+        $query = "UPDATE organizations SET members = members - 1 WHERE id = $groupId";
 
         if($mysqli->query($query) === TRUE){
           print "Successfully left group.";
@@ -290,6 +348,94 @@
       print $mysqli->error;
     }
     
+    $mysqli->close();
+  }
+
+  function get_group_info(){
+    if(!isset($_COOKIE['userid'])){
+      header("location: ../login.php");
+      exit;
+    }
+
+    require_once "../config/db.conf";
+
+    if($mysqli->connect_error){
+      print "There was an issue connecting to the database.<br>Please try again later.";
+      exit;
+    }
+
+    $groupId = $_GET['groupid'];
+
+    $query = "SELECT * FROM organizations WHERE id = $groupId";
+
+    $result = $mysqli->query($query);
+
+    if($result->num_rows == 1){
+      $groupInfo = array();
+
+      $row = mysqli_fetch_assoc($result);
+      $groupInfo[] = $row['groupName'];
+      $groupInfo[] = $row['groupDescription'];
+      $groupInfo[] = $row['members'];
+      $groupInfo[] = $row["numPosts"];
+
+      $dateCreated = $row['addDate'];
+      $time = strtotime($dateCreated);
+      $groupInfo[] = date("m/d/y", $time);
+
+      print json_encode($groupInfo);
+    } else {
+      print "There was an issue getting group data.<br>Please contact system administrator.";
+      exit;
+    }
+    
+    $mysqli->close();
+  }
+
+  function add_new_membership(){
+    // Make sure user is logged in
+    if(!isset($_COOKIE['userid'])){
+      header("location: ../login.php");
+      exit;
+    }
+
+    // Connect to database
+    require_once "../config/db.conf";
+    if($mysqli->connect_error){
+      print "There was an issue connecting to the database.<br>Please try again later.";
+      exit;
+    }
+
+    // Get the id of the current user
+    $username = $_COOKIE['userid'];
+    $query = "SELECT id FROM users WHERE username = '$username'";
+    $result = $mysqli->query($query);
+
+    if($result->num_rows == 1){
+      $row = mysqli_fetch_assoc($result);
+      $userId = $row['id'];
+
+      // Get the id of the group to be joined
+      $groupId = $_GET['groupid'];
+
+      // Add a new membership to the database
+      $query = "INSERT INTO groupMemberships (userid, groupid) VALUES ($userId, $groupId)";
+
+      if($mysqli->query($query) == TRUE){
+        // Update the member count in the joined group
+        $query = "UPDATE organizations SET members = members + 1 WHERE id = $groupId";
+        if($mysqli->query($query) == TRUE){
+          print TRUE;
+        } else {
+          print FALSE;
+        }
+      } else {
+        print "There was a problem adding the new membership.";
+      }
+    } else {
+      print "Could not get user id.";
+    }
+
     $mysqli->close();
   }
 ?>

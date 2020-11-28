@@ -71,12 +71,21 @@ textarea {
   resize: none;
 }
 
+input {
+  font-family: Mulish;
+}
+
 /****************/
 /* || UTILITIES */
 /****************/
 
+div.space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .large-header {
-  margin-top: 20px;
   font-size: 40px;
 }
 
@@ -143,6 +152,30 @@ textarea {
   display: none;
 }
 
+/* Searchbar */
+.searchbar {
+  border: 2px solid lightgray;
+  border-radius: 5px;
+  display: flex;
+  width: 240px;
+  background-color: white;
+}
+
+.searchbar input {
+  height: 40px;
+  width: 200px;
+  border: none;
+  padding: 4px;
+  background-color: transparent;
+}
+
+.searchbar button {
+  height: 40px;
+  width: 40px;
+  border-radius: 0;
+  background-color: lightgray;
+}
+
 /* Text Colors */
 .txt-black { color: black; }
 .txt-darkgrey { color: #333; }
@@ -187,6 +220,7 @@ textarea {
   justify-content: center;
   align-items: center;
   height: 100%;
+  position: relative;
 }
 
 #main-navbar .right-nav i {
@@ -196,27 +230,60 @@ textarea {
   color: white;
 }
 
-#main-navbar .right-nav i:hover {
+#main-navbar .right-nav ul#navbar-links li:hover {
   cursor: pointer;
+  background-color: var(--light-main-color);
 }
 
-#main-navbar ul {
+#main-navbar ul#navbar-links {
   height: 100%;
   display: flex;
-  align-items: center;
 }
 
-#main-navbar ul li {
+#main-navbar ul#navbar-links li:nth-child(2):hover div.navbar-dropdown-menu {
+  display: block;
+}
+
+div.right-nav ul#navbar-links li {
   padding: 0 30px;
   font-size: 20px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  position: relative;
 }
 
-#main-navbar ul li:hover {
+div.right-nav ul li a:hover {
   filter: brightness(70%);
 }
 
-/* USER ICON MENU */
+/* link dropdown menu */
+
+div.navbar-dropdown-menu {
+  position: absolute;
+  top: 6vw;
+  right: 0;
+  background-color: var(--light-main-color);
+  width: 127px;
+  height: auto;
+  display: none;
+}
+
+div.right-nav ul#navbar-links li div.navbar-dropdown-menu ul li {
+  padding: 15px 10px 0 10px;
+  display: flex;
+  justify-content: center;
+}
+
+div.right-nav ul#navbar-links li div.navbar-dropdown-menu ul li:last-child {
+  padding-bottom: 15px;
+}
+
+div.navbar-dropdown-menu ul li a {
+  font-size: 16px;
+}
+
+/* user icon dropdown menu */
 
 #user-menu {
   position: fixed;
@@ -594,3 +661,16 @@ div#leave-group-confirmation-window button {
   font-size: 16px;
   width: 80px;
 }
+
+/* FIND GROUPS PAGE */
+
+#find-groups-btns {
+  display: flex;
+  height: 44px;
+}
+
+button#clear-search-btn {
+  margin-right: 10px;
+}
+
+

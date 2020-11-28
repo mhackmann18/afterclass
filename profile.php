@@ -1,15 +1,18 @@
 <?php 
   // HTTPS Redirect
-  require $_SERVER["DOCUMENT_ROOT"] . "/afterclass/php/REDIRECT.php";
-  // Connect to MYSQL db, check for error
-  require_once $_SERVER["DOCUMENT_ROOT"] . "/afterclass/config/db.conf";
+  require $_SERVER["DOCUMENT_ROOT"]."/afterclass/php/REDIRECT.php";
+
+  // Connect to db, check for error
+  require_once $_SERVER["DOCUMENT_ROOT"]."/afterclass/config/db.conf";
   if($mysqli->connect_error){
     print "There was an issue connecting to the database.<br>Please try again later.";
     exit;
   }
+
   // Make sure the user is logged in, redirect if not
   if(!isset($_COOKIE['userid']))
     header("location: login.php");
+
   // Refresh the time on the login cookie
   $username = $_COOKIE['userid'];
   setcookie('userid', $username, time() + 1800, "/");
@@ -27,21 +30,21 @@
 </head>
 <body>
   <?php
-    // First query gets the info of the logged in user, second checks if they uploaded an image or not.
+    // Query to get the logged in user's data
     $query = "SELECT * FROM users WHERE username = '$username'";
     $result = $mysqli->query($query);
-    if(!$result){
-      print "Error. Please contact the system administrator.";
-      exit; 
-    }
+
     if($result->num_rows == 1){
       $row = mysqli_fetch_assoc($result);
-      // User Info
+
+      // User data
       $id = $row['id'];
       $userEmail = $row['email'];
       $userMajor = $row['major'];
       $userFullName = $row['fullName'];
       $userBio = $row['bio'];
+
+      // See if the user has uploaded a profile image
       $query = "SELECT * FROM profileimg WHERE userid = '$id'";
       $result = $mysqli->query($query);
       if(!$result){
@@ -49,14 +52,19 @@
         exit; 
       }
       $row = mysqli_fetch_assoc($result);
-      // If user uploaded an image display it, otherwise display default
+
+      // If user uploaded an image, display i
       if($row['status'] == 0){
         $userImage = "<img src='/afterclass/uploads/profile".$id.".jpg?'".mt_rand()." alt='profile-image'>";
-      } else {
+      } 
+      // If user didn't upload an image, display default
+      else {
         $userImage = "<img src='/afterclass/img/blank-profile.jpg' alt='blank-profile-image'>";
       }
+    } else {
+      print "Error. Please contact the system administrator.";
+      exit; 
     }
-    $mysqli->close();
   ?>
   <?php require $_SERVER["DOCUMENT_ROOT"] . '/afterclass/navbar.php'; ?>
 
@@ -108,12 +116,34 @@
       <textarea id="edit-bio" cols="30" rows="6"></textarea>
       <p id="bio-err-msg" class="err-msg"></p>
       <!-- Groups -->
+      
       <h1 id="profile-page-groups-header">Groups</h1>
       <ul id="profile-page-groups">
-        <li><a href="#">CS 2830</a></li>
-        <li><a href="#">CS 3050</a></li>
-        <li><a href="#">Mizzou Athletics</a></li>
-        <li><a href="#">Kappa Sigma</a></li>
+        <!-- Print list items with links to user's groups -->
+        <?php
+          // Get group membership ids
+          $query = "SELECT groupid FROM groupMemberships WHERE userid = $id";
+      
+          $result = $mysqli->query($query);
+
+          // Loop through groups and print li for each
+          while($row = mysqli_fetch_assoc($result)){
+            $groupId = $row['groupid'];
+            $nameQuery = "SELECT * FROM organizations WHERE id = $groupId";
+
+            $nameResult = $mysqli->query($nameQuery);
+
+            if($nameResult->num_rows == 1){
+              $nameRow = mysqli_fetch_assoc($nameResult);
+              $name = $nameRow['groupName'];
+              print "<li><a href='/afterclass/group.php?groupid=$groupId'>$name</a></li>";
+            } else {
+              print "There was an issue getting group data.<br>Please contact system administrator.";
+              exit;
+            }
+          }
+          $mysqli->close();
+        ?>
       </ul>
     </div>
   </div>
