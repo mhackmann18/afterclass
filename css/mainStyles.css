@@ -69,6 +69,7 @@ hr {
 
 textarea {
   resize: none;
+  font-family: Mulish;
 }
 
 input {
@@ -78,6 +79,21 @@ input {
 /****************/
 /* || UTILITIES */
 /****************/
+
+.outer {
+  display: table;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 3; 
+}
+
+.middle {
+  display: table-cell;
+  vertical-align: middle;
+}
 
 div.space-between {
   display: flex;
@@ -89,10 +105,32 @@ div.space-between {
   font-size: 40px;
 }
 
+.btn {
+  display: inline-block;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.btn:hover {
+  filter: brightness(90%);
+}
+
 .btn-gold {
   background-color: var(--mu-color);
   padding: 12px 16px;
-  font-size: 16px;
+}
+
+.btn-gray {
+  background-color: lightgray;
+  padding: 12px 16px;
+  color: black;
+}
+
+.btn-grey {
+  background-color: lightgray;
+  padding: 12px 16px;
+  color: black;
 }
 
 .container {
@@ -103,6 +141,14 @@ div.space-between {
 
 .img-small {
   width: 50px;
+}
+
+.padding-bottom-mid {
+  padding-bottom: 25px;
+}
+
+.margin-top-mid {
+  margin-top: 25px;
 }
 
 .flex-center {
@@ -200,6 +246,7 @@ div.space-between {
   position: fixed;
   top: 0;
   z-index: 1;
+  transition: top .3s;
 }
 
 #main-navbar .left-nav a {
@@ -312,6 +359,10 @@ div.navbar-dropdown-menu ul li a {
   display: block;
 }
 
+#main-navbar .right-nav i:hover {
+  cursor: pointer;
+}
+
 #user-menu:hover {
   display: block;
 }
@@ -326,6 +377,57 @@ div.navbar-dropdown-menu ul li a {
   font-weight: 300;
 }
 
+/* USER POST */
+
+div.post {
+  border: 1px solid grey;
+  border-radius: 5px;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  width: 50vw;
+}
+
+div.post-media {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+}
+
+.post-media img {
+  max-width: 100%;
+  max-height: 66vh;
+}
+
+.post-media iframe {
+  width: 100%;
+}
+
+.post-head {
+  display: flex;
+  align-items: center;
+}
+
+.post-head img.profile-img {
+  width: 40px;
+  border-radius: 50%;
+  border: 1px solid grey;
+  margin-right: 20px;
+}
+
+.post-head img.profile-img:hover {
+  cursor: pointer;
+}
+
+.post-head p.who-when {
+  display: inline-block;
+  color: gray;
+}
+
+.post p.post-text {
+  margin-top: 20px;
+  line-height: 1.6;
+}
 /******************/
 /* || STORE PAGES */
 /******************/
@@ -673,4 +775,119 @@ button#clear-search-btn {
   margin-right: 10px;
 }
 
+/* GROUP FEED PAGE */
 
+div#group-feed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+div#feed-page-header {
+  margin-bottom: 40px;
+}
+
+h1#feed-page-feed-header {
+  margin-bottom: 15px;
+  margin-left: 120px;
+}
+
+p#feed-page-no-posts-msg {
+  margin-top: 100px;
+  color: lightgray;
+  font-size: 22px;
+}
+
+/* NEW POST PAGE */
+
+form#new-post-form {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  padding: 35px;
+  width: 50vw;
+  margin: 220px auto 0 auto;
+  position: relative;
+}
+
+div#post-to-container select {
+  font-family: Mulish;
+  padding: 5px;
+  border: 1px solid lightgray;
+  border-radius: 3px;
+  margin-left: 5px;
+}
+
+form#new-post-form textarea {
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 30px;
+}
+
+input#file-upload {
+  position: absolute; 
+  left: -99999rem
+}
+
+label#post-img-btn:hover {
+  cursor: pointer;
+  filter: brightness(90%);
+}
+
+input#yt-link-input {
+  margin-top: 14px;
+  width: 220px;
+  border: 1px solid lightgray;
+  border-radius: 3px;
+  padding: 4px;
+  margin-left: 21.5%;
+  display: none;
+  margin-bottom: -20px;
+}
+
+p#post-err-msg {
+  position: absolute;
+  right: 30px;
+  bottom: 10px;
+}
+
+/* Post preview */
+
+div#post-preview {
+  position: relative;
+  width: 40vw;
+  background-color: white;
+  margin: 25px auto 25px auto;
+}
+
+div#preview-post-btns {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+div#preview-post-btns button {
+  margin-right: 15px;
+}
+
+i#cancel-preview-btn {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  color: #333;
+}
+
+i#cancel-preview-btn:hover {
+  cursor: pointer;
+  color: darkgrey;
+}
+
+iframe#post-preview-video {
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}

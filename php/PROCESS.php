@@ -44,6 +44,12 @@
       get_group_info();
     } else if($action == 'add-new-membership'){
       add_new_membership();
+    } else if($action == 'get-posts-by-group-id'){
+      get_posts_by_group_id();
+    } else if($action == 'check-profile-img'){
+      print hasProfileImg($_GET['userid']);
+    } else if($action == 'get-username-by-id'){
+      print getUsernameById($_GET['userid']);
     } else {
       print "Invalid action submitted to process.php.";
     }
@@ -437,5 +443,110 @@
     }
 
     $mysqli->close();
+  }
+
+  function get_posts_by_group_id(){
+    $groupId = $_GET['groupid'];
+    $userId = getLoggedInUserId();
+
+    if(isGroupMember($userId, $groupId)){
+      require "../config/db.conf";
+      if($mysqli->connect_error)
+        exit("There was an issue connecting to the database.<br>");
+
+      $query = "SELECT * FROM userPosts WHERE groupid = $groupId ORDER BY addDate DESC";
+
+      $result = $mysqli->query($query);
+
+      $posts = array();
+
+      while($row = mysqli_fetch_assoc($result)) {
+        $post = array(
+          'userId' => $row['userid'],
+          'text' => $row['postText'],
+          'link' => $row['youtubeLink'],
+          'fileName' => $row['fileName'],
+          'dateCreated' => $row['addDate']
+        );
+        array_push($posts, $post);
+      }
+
+      print json_encode($posts);
+      $mysqli->close();
+    } else {
+      print "Silly user. You can't see this group's posts unless you're a member.<br>";
+    }
+  }
+
+  // Helper Functions
+
+  function isGroupMember($userId, $groupId){
+    require "../config/db.conf";
+
+    if($mysqli->connect_error)
+      exit("There was an error connecting to the database");
+
+    $query = "SELECT * FROM groupMemberships WHERE userid = $userId AND groupid = $groupId";
+
+    $result = $mysqli->query($query);
+
+    if($result){
+      $mysqli->close();
+      return TRUE;
+    } else {
+      $mysqli->close();
+      return FALSE;
+    }
+  }
+
+  function getLoggedInUserId(){
+    require "../config/db.conf";
+
+    if($mysqli->connect_error)
+      exit("There was an issue connecting to the database.<br>");
+
+    $username = $_COOKIE['userid'];
+
+    $result = $mysqli->query("SELECT * FROM users WHERE username = '$username'");
+
+    $row = mysqli_fetch_assoc($result);
+    $userId = $row['id'];
+
+    $mysqli->close();
+
+    return $userId;
+  }
+
+  // Returns true if the user with the passed id has uploaded a profile image and false if not
+  function hasProfileImg($userId){
+    require "../config/db.conf";
+
+    if($mysqli->connect_error)
+      exit("There was an issue connecting to the database.<br>");
+    
+    $result = $mysqli->query("SELECT * FROM profileimg WHERE userid = $userId");
+
+    $row = mysqli_fetch_assoc($result);
+
+    if($row['status'] == 0){
+      $mysqli->close();
+      return TRUE; 
+    } else {
+      $mysqli->close();
+      return FALSE;
+    }
+  }
+
+  function getUserNameById($userId){
+    require "../config/db.conf";
+
+    if($mysqli->connect_error)
+      exit("There was an issue connecting to the database.<br>");
+    
+    $result = $mysqli->query("SELECT * FROM users WHERE id = $userId");
+
+    $row = mysqli_fetch_assoc($result);
+
+    return $row['username'];
   }
 ?>

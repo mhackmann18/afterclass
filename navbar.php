@@ -15,7 +15,7 @@
         </ul>
       </div>
     </li>
-      <li><a href="#">Post</a></li>
+      <li><a href="/afterclass/newPost.php">Post</a></li>
     </ul>
     <!-- Navbar User Icon -->
     <i id="user-btn" class="fas fa-2x fa-user-circle"></i>
@@ -29,7 +29,7 @@
       <ul>
         <li><a class="txt-darkgray txt-thin" href="/afterclass/profile.php">Profile</a></li>
         <li><a class="txt-darkgray txt-thin" href="#">Settings</a></li>
-        <li class="txt-darkgray txt-thin" id="log-out">Log Out</li>
+        <li><a href="./login.php" class="txt-darkgray txt-thin" id="log-out">Log Out</a></li>
       </ul>
     </div>
   </div>

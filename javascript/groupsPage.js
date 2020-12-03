@@ -125,7 +125,7 @@ function addButtonEvents(groupDiv, id){
     leaveGroupWindow.style.display = "block";
     overlay.style.display = "block";
     confirmLeaveGroupBtn.onclick = function(){
-      $.get("./php/PROCESS.php", { action: "leave-group", groupid: id }, res => {
+      $.get("./php/PROCESS.php", { action: "leave-group", groupid: id }, () => {
         location.reload();
       });
     }

@@ -24,11 +24,30 @@
 <body>
   <?php require 'navbar.php'; ?>
   <div class="container">
-    <?php
-      print $groupId;
-    ?>
+    <div id="feed-page-header" class="group-page-info">
+      <h1></h1>
+      <h3>Description</h3>
+      <div class="group-page-desc"></div>
+      <div>
+        <ul>
+          <li>Members: <span id="feed-page-members"></span></li>
+          <li>Created: <span id="feed-page-date"></span></li>
+          <li>Posts: <span id="feed-page-posts"></span></li>
+        </ul>
+        <div>
+          <a href="./newPost.php" class="btn btn-grey">Post</a>
+          <button id="feed-page-leave-btn" class="btn-gold leave-group-btn">Leave</button>
+        </div>
+      </div>
+    </div>
+    <h1 id="feed-page-feed-header">Activity in <span id="feed-page-group-name"></span></h1>
+    <div id="group-feed">
+    </div>
   </div>
-
-  <!-- <script src="/afterclass/javascript/group.php"></script> -->
+  
+  <script type="text/javascript">
+    const groupId = <?php print $groupId ?>;
+  </script>
+  <script src="/afterclass/javascript/group.js"></script>
 </body>
 </html>
