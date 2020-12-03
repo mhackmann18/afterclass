@@ -6,7 +6,7 @@
   <div class="right-nav">
     <ul id="navbar-links">
       <!-- Navbar Links -->
-      <li><a href="/afterclass/index.php">Home</a></li>
+      <li><a href="/afterclass/index.php">Feed</a></li>
       <li><a href="/afterclass/groups.php">Groups</a>
       <div class="navbar-dropdown-menu">
         <ul>

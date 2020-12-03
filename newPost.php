@@ -52,7 +52,9 @@
       <div class="middle">
         <div id="post-preview" class="post">
           <div class="post-head">
-            <img class="profile-img" src="/afterclass/img/blank-profile.jpg" alt="profile image">
+            <div class="profile-img-container">
+              <img class="profile-img" src="/afterclass/img/blank-profile.jpg" alt="profile image">
+            </div>
             <p class="who-when">(preview) You posted on <span class="post-date"></span></p>
           </div>
           <p class="post-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Omnis a ipsam ratione. Laborum repellat maiores sit, repellendus voluptate sapiente, ad vel mollitia dignissimos ipsa perspiciatis tempora suscipit omnis, accusamus consequatur repudiandae enim doloribus error eveniet? Dignissimos omnis reiciendis rerum temporibus.</p>
@@ -60,7 +62,7 @@
           </div>
           <div id="preview-post-btns">
             <button id="confirm-post-btn" class="btn btn-gold">Post</button>
-            <button id="change-post-btn" class="btn btn-grey">Go Back</button>
+            <button id="change-post-btn" class="btn btn-grey">Edit</button>
           </div>
           <i id="cancel-preview-btn" class="fas fa-times"></i>
         </div>

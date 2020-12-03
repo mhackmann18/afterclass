@@ -408,11 +408,17 @@ div.post-media {
   align-items: center;
 }
 
-.post-head img.profile-img {
+.profile-img-container {
   width: 40px;
+  height: 40px;
   border-radius: 50%;
   border: 1px solid grey;
   margin-right: 20px;
+  overflow: hidden;
+}
+
+img.profile-img {
+  width: 100%;
 }
 
 .post-head img.profile-img:hover {
@@ -634,7 +640,7 @@ section#your-groups {
   padding-bottom: 30px;
 }
 
-#your-groups-header {
+#your-groups-header, #find-groups-header {
   margin: 30px 0;
 }
 
@@ -654,10 +660,6 @@ button#create-new-group {
 .group-page-info h1 {
   margin-bottom: 10px;
   font-size: 28px;
-}
-
-#your-groups, #discover-groups {
-  padding-left: 20px;
 }
 
 .group-page-info .group-page-desc {

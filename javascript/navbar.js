@@ -16,8 +16,16 @@ userButton.onclick = () => {
 let lastScrollTop = 0;
 
 window.onscroll = () => {
+  let body = document.body, html = document.documentElement;
+
+  let documentHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight );
+
+  let windowHeight = window.innerHeight || html.clientHeight || body.clientHeight;
+
   let st = window.pageYOffset || document.documentElement.scrollTop;
-  if (st > lastScrollTop){
+
+  // If the document height is significantly larger than the window height, and the user is scrolling down, collapse the navbar
+  if(st > lastScrollTop && windowHeight + 100 < documentHeight){
     navbar.style.top = "-6vw";
     userMenu.style.top = "-10vw";
   } else {

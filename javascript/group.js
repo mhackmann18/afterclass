@@ -102,7 +102,7 @@ async function displayPost(post){
  
   newPostElement.innerHTML = 
     `<div class="post-head">
-      ${profileImg}
+      <div class="profile-img-container">${profileImg}</div>
       <p class="who-when">${username} posted on ${jsDate}</p>
     </div>
     <p class="post-text">${post.text}</p>

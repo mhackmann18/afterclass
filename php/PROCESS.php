@@ -177,7 +177,7 @@
       $userId = $row['id'];
     }
 
-    $query = "SELECT groupid FROM groupMemberships WHERE userid = $userId";
+    $query = "SELECT groupid FROM groupMemberships WHERE userid = $userId ORDER BY groupid ASC";
 
     $result = $mysqli->query($query);
 
@@ -233,8 +233,10 @@
             <li>Created: $displayDate</li>
             <li>Posts: $numPosts</li>
           </ul>
-          <a href='./group.php?groupid=$groupId' class='view-group-feed'>View Feed</a>
-          <button class='btn-gold leave-group-btn'>Leave</button>
+          <div>
+            <a href='./group.php?groupid=$groupId' class='btn btn-grey'>View Feed</a>
+            <button class='btn-gold btn leave-group-btn'>Leave</button>
+          </div>
         </div>";
     } else {
       print "There was an issue getting group data.<br>Please contact system administrator.";

@@ -117,7 +117,6 @@ function showGroupCard(id){
 
 function addButtonEvents(groupDiv, id){
   const leaveBtn = groupDiv.querySelector(".leave-group-btn");
-  const viewFeedBtn = groupDiv.querySelector(".view-group-feed");
   const groupTitle = groupDiv.querySelector("h1").innerHTML;
 
   leaveBtn.onclick = function(){
@@ -129,10 +128,6 @@ function addButtonEvents(groupDiv, id){
         location.reload();
       });
     }
-  }
-
-  viewFeedBtn.onclick = function(){
-    console.log(`View feed from group ${id}`);
   }
 }
 

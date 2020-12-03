@@ -67,8 +67,6 @@ function addGroupOption(groupId, groupName){
   groupSelect.innerHTML += option;
 }
 
-
-
 /**********/
 /* EVENTS */
 /**********/
