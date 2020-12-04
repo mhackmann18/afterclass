@@ -8,7 +8,7 @@
   setcookie('userid', $username, time() + 1800, "/");
   
   // HTTPS Redirect
-  require $_SERVER["DOCUMENT_ROOT"] . "/afterclass/php/REDIRECT.php";
+  require $_SERVER["DOCUMENT_ROOT"] . "/afterclass/php/redirect.php";
 ?>
 
 <!DOCTYPE html>
@@ -26,17 +26,6 @@
   <?php require 'navbar.php'; ?>
   <div class="container">
     <div id="group-feed">
-
-      <div class="post margin-top-mid">
-        <div class="post-head">
-          <div class="profile-img-container">
-            <img class="profile-img" src="/afterclass/img/blank-profile.jpg" alt="profile image">
-          </div>
-          <p class="who-when">test posted on 12/03/20</p>
-        </div>
-        <p class="post-text">Testing the update posts query</p>
-        <div class="post-media"></div>
-      </div>
 
     </div>
   </div>

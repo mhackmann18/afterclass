@@ -1,6 +1,6 @@
 <?php 
   // HTTPS Redirect
-  require $_SERVER["DOCUMENT_ROOT"] . "/afterclass/php/REDIRECT.php";
+  require $_SERVER["DOCUMENT_ROOT"] . "/afterclass/php/redirect.php";
   // Make sure the user is logged in, redirect if not
   if(!isset($_COOKIE['userid']))
     header("location: login.php");

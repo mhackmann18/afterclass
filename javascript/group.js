@@ -9,7 +9,7 @@ document.querySelector('body').onload = function(){
 
 // Gets all of the posts that correspond to the group id
 function getPostsByGroupId(groupId){
-  $.get("/afterclass/php/PROCESS.php", { action: 'get-posts-by-group-id', groupid: groupId }, async res => {
+  $.get("/afterclass/php/process.php", { action: 'get-posts-by-group-id', groupid: groupId }, async res => {
     let posts = JSON.parse(res);
     for(post of posts){
       await displayPost(post);
@@ -20,20 +20,20 @@ function getPostsByGroupId(groupId){
 }
 
 function loadGroupCardInfo(groupId){
-  $.get("/afterclass/php/PROCESS.php", { action: "get-group-info", groupid: groupId }, res => {
+  $.get("/afterclass/php/process.php", { action: "get-group-info", groupid: groupId }, res => {
     const groupInfo = JSON.parse(res);
     console.log(groupInfo);
-    groupCard.querySelector("h1").innerHTML = groupInfo[0];
-    groupCard.querySelector(".group-page-desc").innerHTML = groupInfo[1];
-    document.getElementById("feed-page-members").innerHTML = groupInfo[2];
-    document.getElementById("feed-page-posts").innerHTML = groupInfo[3];
-    document.getElementById("feed-page-date").innerHTML = groupInfo[4];
-    document.getElementById("feed-page-group-name").innerHTML = groupInfo[0];
+    groupCard.querySelector("h1").innerHTML = groupInfo.name;
+    groupCard.querySelector(".group-page-desc").innerHTML = groupInfo.description;
+    document.getElementById("feed-page-members").innerHTML = groupInfo.numMembers;
+    document.getElementById("feed-page-posts").innerHTML = groupInfo.numPosts;
+    document.getElementById("feed-page-date").innerHTML = groupInfo.dateCreated;
+    document.getElementById("feed-page-group-name").innerHTML = groupInfo.name;
   });
 }
 
 leaveBtn.onclick = function(){
-  $.get("./php/PROCESS.php", { action: "leave-group", groupid: groupId }, () => {
+  $.post("./php/process.php", { action: "leave-group", groupid: groupId }, () => {
     window.location.replace("./groups.php");
   });
 }
@@ -49,7 +49,7 @@ function showNoPostsMsg(){
 
 async function getProfileImg(userId){
   let hasImg = false;
-  await $.get("/afterclass/php/PROCESS.php", { action: 'check-profile-img', userid: userId }, res => {
+  await $.get("/afterclass/php/process.php", { action: 'check-profile-img', userid: userId }, res => {
     if(res)
       hasImg = true;
   });
@@ -64,7 +64,7 @@ async function getProfileImg(userId){
 async function getUsername(userId){
   let username; 
 
-  await $.get("/afterclass/php/PROCESS.php", { action: 'get-username-by-id', userid: userId }, res => username = res);
+  await $.get("/afterclass/php/process.php", { action: 'get-username-by-id', userid: userId }, res => username = res);
 
   return username;
 }

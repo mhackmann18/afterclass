@@ -36,7 +36,7 @@ closeFormBtn.onclick = function(e){
 }
 
 nameInput.onkeyup = function(e){
-  $.post("/afterclass/php/PROCESS.php", { action: 'check-group-name', name: e.target.value }, res => {
+  $.post("/afterclass/php/process.php", { action: 'check-group-name', name: e.target.value }, res => {
     if(!res){
       console.log("Group name is already taken.");
       nameIsValid = false;
@@ -97,7 +97,7 @@ function clearFields(){
 /********************************/
 
 document.querySelector("body").onload = function(){
-  $.get("/afterclass/php/PROCESS.php", { action: "get-membership-ids" }, res => {
+  $.get("/afterclass/php/process.php", { action: "get-membership-ids" }, res => {
     const ids = JSON.parse(res);
     if(ids[0] != 0){
       ids.forEach(id => showGroupCard(Number(id)));
@@ -106,7 +106,7 @@ document.querySelector("body").onload = function(){
 }
 
 function showGroupCard(id){
-  $.get("/afterclass/php/PROCESS.php", { action: "get-group-card", groupid: id }, res => {
+  $.get("/afterclass/php/process.php", { action: "get-group-card", groupid: id }, res => {
     const card = document.createElement("div");
     card.classList.add("group-page-info");
     card.innerHTML += res;
@@ -124,7 +124,7 @@ function addButtonEvents(groupDiv, id){
     leaveGroupWindow.style.display = "block";
     overlay.style.display = "block";
     confirmLeaveGroupBtn.onclick = function(){
-      $.get("./php/PROCESS.php", { action: "leave-group", groupid: id }, () => {
+      $.post("./php/process.php", { action: "leave-group", groupid: id }, () => {
         location.reload();
       });
     }

@@ -1,5 +1,5 @@
 <!-- HTTPS Redirect -->
-<?php require $_SERVER["DOCUMENT_ROOT"] . "/afterclass/php/REDIRECT.php"; ?>
+<?php require $_SERVER["DOCUMENT_ROOT"] . "/afterclass/php/redirect.php"; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +15,7 @@
 
     <h1>Create New Account</h1>
     <!-- Sign up form -->
-    <form id="create-user-form" action="./php/CREATEUSER.php" method="POST" autocomplete="off"> <!--Checkup on that action-->
+    <form id="create-user-form" action="./php/createUser.php" method="POST" autocomplete="off"> <!--Checkup on that action-->
       <!-- <input type="hidden" name="action" value="create_user"> -->
       <input id="email" type="email" name="email" placeholder="um email" required>
       <input id="name" type="text" name="name" placeholder="full name" required>
@@ -27,7 +27,7 @@
 
     <p id="create-account">Already have an account? <a href="./login.php">Log In</a></p>
 
-    <!-- Will display error message from CREATEUSER.php if the operation failed. -->
+    <!-- Will display error message from createUser.php if the operation failed. -->
     <?php
       if($error){
         print "<p class='create-account-error'>$error</p>";

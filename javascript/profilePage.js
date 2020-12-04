@@ -66,7 +66,7 @@ editProfileBtn.onclick = function(e){
 // Will display an error message if chosen username is already associated with another account.
 usernameInput.onkeyup = e => {
   const val = e.target.value;
-  $.post('./php/PROCESS.php', { action: 'check-username', username: `${val}` }, res => {
+  $.post('./php/process.php', { action: 'check-username', username: `${val}` }, res => {
     // Username is already taken.
     if(!res && val !== document.getElementById("username").innerHTML){
       inputErrMsg.style.display = "block";

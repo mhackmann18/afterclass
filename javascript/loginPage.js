@@ -34,7 +34,7 @@ function displayError(msg){
 
 // Takes a username string and a password string and sends them to process.php for validation. If they're valid, redirects to index.php
 function checkLogin(un, pw){
-  $.post('./php/PROCESS.php', { action: 'login', username: un, password: pw }, res => {
+  $.post('./php/process.php', { action: 'login', username: un, password: pw }, res => {
     if(res !== "Logged in successfully"){
       displayError(res);
     } else {

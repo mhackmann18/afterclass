@@ -18,7 +18,7 @@ hideElement(previewContainer);
 
 // Load the user's groups into the form select
 document.querySelector("body").onload = function(){
-  $.get("/afterclass/php/PROCESS.php", { action: 'get-membership-ids' }, res => {
+  $.get("/afterclass/php/process.php", { action: 'get-membership-ids' }, res => {
     // Parse the JSON array of group ids, get the group name of each id, then add new options to the form select
     JSON.parse(res).forEach(async id => {
       id = Number(id);
@@ -31,7 +31,7 @@ document.querySelector("body").onload = function(){
 // Returns the name string of the group with the passed in id.
 async function getGroupNameById(id){
   let groupName;
-  await $.get("/afterclass/php/PROCESS.php", { action: 'get-group-info', groupid: id }, res => {
+  await $.get("/afterclass/php/process.php", { action: 'get-group-info', groupid: id }, res => {
     dataArr = JSON.parse(res);
     groupName = dataArr[0];
   });

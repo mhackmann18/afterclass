@@ -4,7 +4,7 @@ const logoutBtn = document.getElementById("log-out");
 const navbar = document.getElementById("main-navbar");
 
 logoutBtn.onclick = () => {
-  $.post('./php/PROCESS.php', { action: 'logout' });
+  $.post('./php/process.php', { action: 'logout' });
 }
 
 userButton.onclick = () => {

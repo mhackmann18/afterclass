@@ -1,6 +1,6 @@
 <?php 
   // HTTPS Redirect
-  require $_SERVER["DOCUMENT_ROOT"]."/afterclass/php/REDIRECT.php";
+  require $_SERVER["DOCUMENT_ROOT"]."/afterclass/php/redirect.php";
 
   // Connect to db, check for error
   require_once $_SERVER["DOCUMENT_ROOT"]."/afterclass/config/db.conf";
@@ -79,7 +79,7 @@
       <!-- Button to change profile pic -->
       <button id="change-profile-image" title="Change profile picture"><i class="fas fa-camera fa-2x"></i></button>
       <!-- Hidden form with file input is submitted by the change-profile-image button via javascript -->
-      <form id="upload-image-form" action="/afterclass/php/UPLOAD.php" method="POST" enctype="multipart/form-data" style="display:none;">
+      <form id="upload-image-form" action="/afterclass/php/upload.php" method="POST" enctype="multipart/form-data" style="display:none;">
         <input type="file" name="file">
         <button type="submit" name="submit">Upload Image</button>
       </form>
