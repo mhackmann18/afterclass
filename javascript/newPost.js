@@ -1,6 +1,5 @@
 const form = document.getElementById("new-post-form");
 const groupSelect = form.querySelector("select");
-const ytBtn = document.getElementById("embed-yt-btn");
 const ytLinkInput = document.getElementById("yt-link-input");
 const addImgBtn = document.getElementById("post-img-btn");
 const previewBtn = document.getElementById("preview-new-post-btn");
@@ -18,14 +17,11 @@ hideElement(previewContainer);
 
 // Load the user's groups into the form select
 document.querySelector("body").onload = function(){
-  $.get("/afterclass/php/process.php", { action: 'get-membership-ids' }, res => {
-    // Parse the JSON array of group ids, get the group name of each id, then add new options to the form select
-    JSON.parse(res).forEach(async id => {
-      id = Number(id);
-      let name = await getGroupNameById(id);
-      addGroupOption(id, name);
-    });
-  });
+  $.get("/afterclass/php/process.php", { action: 'get-membership-ids' }, res => 
+  JSON.parse(res).forEach(async id => {
+    let name = await getGroupNameById(Number(id));
+    groupSelect.innerHTML += `<option value='${id}'>${name}</option>`;
+  }));
 }
 
 // Returns the name string of the group with the passed in id.
@@ -40,18 +36,27 @@ async function getGroupNameById(id){
 // Show a preview in the UI of what the post will look like
 function showPreviewWindow(){
   previewContainer.style.display = "table";
+  showElement(document.getElementById("post-preview"));
   showElement(overlay);
 
   previewContainer.querySelector(".post-text").innerHTML = postTextarea.value;
   previewContainer.querySelector(".post-date").innerHTML = getCurrentDateString();
 
   if(fileInput.value){
-    if(fileInput.value.slice(-3) === "pdf"){
-      mediaDiv.innerHTML = '<embed src="./uploads/criteria.pdf" id="post-preview-file-display"/>';
-    } else {
-      mediaDiv.innerHTML = '<img id="post-preview-file-display" alt="post-picture"></img>';
+    if(fileInput.files && fileInput.files[0]){
+      let reader = new FileReader();
+  
+      reader.readAsDataURL(fileInput.files[0]);
+  
+      reader.onload = function(e){
+        if(fileInput.value.slice(-3) === "pdf"){
+          mediaDiv.innerHTML = `<embed src=${e.target.result} id="post-preview-file-display"/>`;
+          document.getElementById("post-preview-file-display").style.height = `${document.getElementById("post-preview-file-display").offsetWidth*1.3}px`;
+        } else {
+          mediaDiv.innerHTML = `<img id="post-preview-file-display" src=${e.target.result} alt="post-picture"></img>`;
+        }
+      }
     }
-    displayFile(fileInput);
   }
 
   if(ytLinkInput.value){
@@ -63,87 +68,68 @@ function showPreviewWindow(){
   }
 }
 
-// Add all a group to the form select
-function addGroupOption(groupId, groupName){
-  let option = `<option value='${groupId}'>${groupName}</option>`;
-  groupSelect.innerHTML += option;
-}
-
 /**********/
 /* EVENTS */
 /**********/
 
-// Show input for youtube video link
-ytBtn.onclick = function(e){
-  e.preventDefault();
-  ytLinkInput.style.display = "inline-block";
-  // Get rid of any file input if a youtube link is added
-  ytLinkInput.onkeydown = () => fileInput.value = "";
-}
-
 // Get rid of any youtube link input if a file is added
-addImgBtn.onclick = function(e){
-  ytLinkInput.style.display = "none";
-  ytLinkInput.value = "";
-}
+addImgBtn.onclick = () => ytLinkInput.value = "";
 
 previewBtn.onclick = function(e){
   e.preventDefault();
-  if(checkInputs()){
+  if(checkInputs())
     showPreviewWindow();
-  } 
 }
 
 cancelPreviewBtn.onclick = function(){
-  hideElement(previewContainer);
-  hideElement(overlay);
+  hideElement(previewContainer, overlay);
   mediaDiv.innerHTML = "";
 }
 
 changePostBtn.onclick = function(){
-  hideElement(previewContainer);
-  hideElement(overlay);
+  hideElement(previewContainer, overlay);
   mediaDiv.innerHTML = "";
 }
 
+ytLinkInput.onkeydown = () => fileInput.value = "";
+
 postBtn.onclick = () => form.submit();
-
-
 postTextarea.onkeydown = () => hideErrMsg();
-
 groupSelect.onchange = () => hideErrMsg();
 
-/***********************/
-/* USER ERROR HANDLING */
-/***********************/
+/***************************************/
+/* INPUT VALIDATION AND ERROR HANDLING */
+/***************************************/
 
 // Show an error message to the user
 function displayErrMsg(msg){
-  errMsgP.style.display = "inline-block";
+  showElement(errMsgP);
   errMsgP.innerHTML = msg;
 }
 
 // Hide the error message
 function hideErrMsg(){
+  hideElement(errMsgP);
   errMsgP.innerHTML = "";
-  errMsgP.style.display = "none";
 }
 
-// Check textarea and group input
+// Return true if inputs are valid and false if not
 function checkInputs(){
-  let formValid = true;
+  let formValid = false;
+
   if(groupSelect.value === "invalid"){
     displayErrMsg("Please select a group to post to");
-    formValid = false;
   } else if(!postTextarea.value){
     displayErrMsg("Please enter some text for your post");
-    formValid = false;
   } else if(postTextarea.value.length > 250){
     displayErrMsg("Post text cannot be longer than 250 characters.");
-    formValid = false;
+  } else if(ytLinkInput.value && !/https:\/\/www.youtube.com\/watch\?v=/.test(ytLinkInput.value)){
+    displayErrMsg("Make sure the link that you used is a valid youtube link");
   } else {
+    formValid = true;
     hideErrMsg();
   }
+
   return formValid;
 }
 
@@ -155,8 +141,9 @@ function showElement(el){
   el.style.display = "block";
 }
 
-function hideElement(el){
-  el.style.display = "none";
+function hideElement(...args){
+  for(el of args)
+    el.style.display = "none";
 }
 
 function getCurrentDateString(){
@@ -170,15 +157,15 @@ function getCurrentDateString(){
   return `${month}/${day}/${year}`;
 }
 
-function displayFile(input){
+async function getFileSrc(input){
   if(input.files && input.files[0]){
     let reader = new FileReader();
 
-    reader.onload = function(e){
-      document.getElementById("post-preview-file-display").src = e.target.result;
-    }
-
     reader.readAsDataURL(input.files[0]);
+
+    reader.onload = function(e){
+      return `${e.target.result}#` + new Date().getTime();
+    }
   }
 }
 

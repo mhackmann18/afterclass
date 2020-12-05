@@ -29,14 +29,14 @@
     </section>
 
     <!-- Popup group creation form -->
-    <form method="POST" id="create-group-form" action="/afterclass/php/createGroup.php">
+    <form method="POST" id="create-group-form" action="/afterclass/php/process.php">
       <button id="cancel-create-group-btn">
         <i class="fas fa-times"></i>
       </button>
       <h3>Create New Group</h3>
       <input name="group-name" type="text" placeholder="name of your group" class="input-field">
       <textarea name="description" id="" cols="50" rows="10" placeholder="group description" class="input-field"></textarea>
-      <button id="create-group-btn" class="btn-gold">Create Group</button>
+      <button id="create-group-btn" class="btn-gold" name="action" value="create-new-group">Create Group</button>
       <p id="create-group-err-msg" class="err-msg"></p>
     </form>
 

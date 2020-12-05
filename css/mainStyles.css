@@ -840,20 +840,19 @@ input#file-upload {
   left: -99999rem
 }
 
+label#post-img-btn { margin-right: 10px; }
+
 label#post-img-btn:hover {
   cursor: pointer;
   filter: brightness(90%);
 }
 
 input#yt-link-input {
-  margin-top: 14px;
   width: 220px;
   border: 1px solid lightgray;
   border-radius: 3px;
-  padding: 4px;
-  margin-left: 21.5%;
-  display: none;
-  margin-bottom: -20px;
+  padding: 10px;
+  margin-left: 10px;
 }
 
 p#post-err-msg {
@@ -869,6 +868,7 @@ div#post-preview {
   width: 40vw;
   background-color: white;
   margin: 25px auto 25px auto;
+  display: none;
 }
 
 div#preview-post-btns {
@@ -897,4 +897,8 @@ iframe#post-preview-video {
   width: 100%;
   margin-top: 20px;
   margin-bottom: 10px;
+}
+
+embed#post-preview-file-display {
+  width: 90%;
 }

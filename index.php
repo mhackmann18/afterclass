@@ -8,7 +8,7 @@
   setcookie('userid', $username, time() + 1800, "/");
   
   // HTTPS Redirect
-  require $_SERVER["DOCUMENT_ROOT"] . "/afterclass/php/redirect.php";
+  require "/var/www/html/afterclass/php/redirect.php";
 ?>
 
 <!DOCTYPE html>

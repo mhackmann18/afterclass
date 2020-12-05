@@ -1,37 +1,15 @@
 <!-- Got some help here from https://www.youtube.com/watch?v=y4GxrIa7MiE -->
 
 <?php
-  // Make sure the user is logged in, redirect if not redirect to login
-  if(!isset($_COOKIE['userid']))
-    header("location: ../login.php");
-
-  // Makes sure submit button was actually clicked
-  if(isset($_POST['submit'])){
-
-    // Connect to db
-    require_once $_SERVER["DOCUMENT_ROOT"]."/afterclass/config/db.conf";
-    $main_dir = $_SERVER["DOCUMENT_ROOT"]."/afterclass";
-
-    // Get current user's id
-    $username = $_COOKIE["userid"];
-    $query = "SELECT * FROM users WHERE username = '$username'";
-    $result = $mysqli->query($query);
-    if(!$result){
-      print "Error. Please contact the system administrator.";
-      $mysqli->close();
-      exit; 
-    }
-    if($result->num_rows == 1){
-      $row = mysqli_fetch_assoc($result);
-      $id = $row['id'];
-    }
+  function uploadProfileImg($id, $file){
+    $mysqli = connectDB();
 
     // File data
-    $fileName = $_FILES['file']['name'];
-    $fileTmpName = $_FILES['file']['tmp_name'];
-    $fileSize = $_FILES['file']['size'];
-    $fileError = $_FILES['file']['error'];
-    $fileType = $_FILES['file']['type'];
+    $fileName = $file['name'];
+    $fileTmpName = $file['tmp_name'];
+    $fileSize = $file['size'];
+    $fileError = $file['error'];
+    $fileType = $file['type'];
 
     // Extracts the file extension
     $fileExt = explode('.', $fileName);
@@ -45,7 +23,7 @@
       if($fileError === 0){
         if($fileSize < 1000000) {
           $fileNameNew = "profile".$id.".".$fileActualExt;
-          $fileDestination = $main_dir."/"."uploads/".$fileNameNew;
+          $fileDestination = "/var/www/html/afterclass/uploads/".$fileNameNew;
           if(copy($fileTmpName, $fileDestination)){
             $query = "UPDATE profileimg SET status=0 WHERE userid='$id'";
             $mysqli->query($query);
@@ -67,7 +45,7 @@
     } else {
       $error = "File extension must be .jpg.<br>Check that file extension is .jpg and not .jpeg.";
     }
+    require "/var/www/html/afterclass/yourProfile.php";
+    $mysqli->close();
   }
-  require $main_dir."/yourProfile.php";
-  $mysqli->close();
 ?>

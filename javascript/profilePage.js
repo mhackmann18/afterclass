@@ -136,7 +136,7 @@ saveChangesBtn.onclick = function(){
   }
   // Submit to updateyourProfile.php
   if(canSubmit){
-    $.post("./php/updateyourProfile.php", { username: usernameVal, major: majorVal, bio: bioVal }, res => {
+    $.post("./php/process.php", { action: "update-profile", username: usernameVal, major: majorVal, bio: bioVal }, res => {
       if(res !== 'logout'){
         window.location.replace("./yourProfile.php");
       } else {

@@ -24,13 +24,6 @@
   <div class="container" id="find-groups-page">
     <div class="space-between">
       <h1 id="find-groups-header" class="large-header">Join Groups</h1>
-      <div id="find-groups-btns">
-        <button id="clear-search-btn">Clear Search</button>
-        <div class="searchbar">
-          <input placeholder="Search Groups" type="text">
-          <button><i class="fas fa-search"></i></button>
-        </div>
-      </div>
     </div>
 
     <section id="groups">

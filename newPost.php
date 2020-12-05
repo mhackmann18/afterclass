@@ -23,7 +23,8 @@
   <?php require 'navbar.php'; ?>
   <div class="container">
 
-    <form id="new-post-form" action="/afterclass/php/createPost.php" method="POST" enctype="multipart/form-data">
+    <form id="new-post-form" action="/afterclass/php/process.php" method="POST" enctype="multipart/form-data">
+      <input hidden name="action" value="create-new-post">
       <div class="space-between padding-bottom-mid">
         <h1 id="new-post-header">New Post</h1>
         <div id="post-to-container">
@@ -38,16 +39,16 @@
         <div>
           <label id="post-img-btn" for="file-upload" class="btn-gold btn">Add Image</label>
           <input name="file" id="file-upload" type="file"/> or 
-          <button id="embed-yt-btn" class="btn btn-grey">Embed Youtube Video</button>
+          <input id="yt-link-input" type="text" placeholder="Add youtube video by link">
         </div>
         <div>
           <button id="preview-new-post-btn" class="btn btn-gold">Continue to Post</button>
         </div>
       </div>
-      <input id="yt-link-input" name="yt-link" type="text" placeholder="Youtube video link">
       <p id="post-err-msg" class="err-msg"></p>
     </form>
 
+    <!-- Post preview window that's hidden by default -->
     <div class="outer">
       <div class="middle">
         <div id="post-preview" class="post">
@@ -57,7 +58,7 @@
             </div>
             <p class="who-when">(preview) You posted on <span class="post-date"></span></p>
           </div>
-          <p class="post-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Omnis a ipsam ratione. Laborum repellat maiores sit, repellendus voluptate sapiente, ad vel mollitia dignissimos ipsa perspiciatis tempora suscipit omnis, accusamus consequatur repudiandae enim doloribus error eveniet? Dignissimos omnis reiciendis rerum temporibus.</p>
+          <p class="post-text"></p>
           <div class="post-media">
           </div>
           <div id="preview-post-btns">
@@ -68,7 +69,7 @@
         </div>
       </div>
     </div>
-
+    
     <div id="overlay"></div>
   </div>
 

@@ -28,7 +28,6 @@
       <hr>
       <ul>
         <li><a class="txt-darkgray txt-thin" href="/afterclass/yourProfile.php">Profile</a></li>
-        <li><a class="txt-darkgray txt-thin" href="#">Settings</a></li>
         <li><a href="./login.php" class="txt-darkgray txt-thin" id="log-out">Log Out</a></li>
       </ul>
     </div>

@@ -79,9 +79,9 @@
       <!-- Button to change profile pic -->
       <button id="change-profile-image" title="Change profile picture"><i class="fas fa-camera fa-2x"></i></button>
       <!-- Hidden form with file input is submitted by the change-profile-image button via javascript -->
-      <form id="upload-image-form" action="/afterclass/php/upload.php" method="POST" enctype="multipart/form-data" style="display:none;">
+      <form id="upload-image-form" action="/afterclass/php/process.php" method="POST" enctype="multipart/form-data" style="display:none;">
         <input type="file" name="file">
-        <button type="submit" name="submit">Upload Image</button>
+        <button type="submit" name="action" value="upload-profile-img">Upload Image</button>
       </form>
       <?php print '<h1 class="txt-bold">'.$userFullName.'</h1>'; ?>
       <ul id="profile-page-info">

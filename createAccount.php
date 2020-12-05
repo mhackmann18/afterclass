@@ -15,7 +15,7 @@
 
     <h1>Create New Account</h1>
     <!-- Sign up form -->
-    <form id="create-user-form" action="./php/createUser.php" method="POST" autocomplete="off"> <!--Checkup on that action-->
+    <form id="create-user-form" action="./php/public/createUser.php" method="POST" autocomplete="off"> <!--Checkup on that action-->
       <!-- <input type="hidden" name="action" value="create_user"> -->
       <input id="email" type="email" name="email" placeholder="um email" required>
       <input id="name" type="text" name="name" placeholder="full name" required>

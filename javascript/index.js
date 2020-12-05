@@ -54,6 +54,7 @@ function getCookie(name) {
 
 // Takes in a post object and displays it as a post in the feed div
 async function displayPost(post){
+  console.log(post);
   const profileImg = await getProfileImg(post.userId);
   const groupName = await getGroupNameById(post.groupId);
   let username = await getUsername(post.userId);
@@ -66,6 +67,8 @@ async function displayPost(post){
 
   if(post.link){
     media = `<iframe id=${post.link} src=${post.link} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+  } else if(post.fileName && post.fileName.slice(-3) === "pdf"){
+    media = `<embed src="./uploads/${post.fileName}" id="post-preview-file-display"/>`;
   } else if(post.fileName){
     media = `<img src="/afterclass/uploads/${post.fileName}" alt="posted image">`;
   }
@@ -94,6 +97,17 @@ async function displayPost(post){
       const iframe = document.getElementById(post.link);
       let width = iframe.offsetWidth;
       iframe.style.height = `${width*.5}px`;
+      this.disconnect();
+    });
+
+    observer.observe(feedDiv, { childList: true });
+  }
+
+  if(post.fileName && post.fileName.slice(-3) === "pdf"){
+    const observer = new MutationObserver(function(){
+      const embed = document.getElementById("post-preview-file-display");
+      let width = embed.offsetWidth;
+      embed.style.height = `${width*1.1}px`;
       this.disconnect();
     });
 

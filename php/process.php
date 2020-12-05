@@ -1,13 +1,22 @@
 <?php 
+  require_once './helperFunctions.php';
+  require_once './readDB/readDB.php';
+  require_once './changeDB/updateDB.php';
+  require_once './getFromDB/getData.php';
+  
+  // Make sure user is logged in
+  if(!isset($_COOKIE['userid'])){
+    header("location: ../login.php");
+    exit;
+  }
+
   if(!empty($_POST['action'])){
 
     $action = $_POST['action'];
 
     /* POST REQUEST HANDLERS */
 
-    if($action == 'login'){
-      handleLogin();
-    } else if($action == 'logout'){
+    if($action == 'logout'){
 
       setcookie('userid', '', 1, "/");
 
@@ -31,6 +40,30 @@
       $groupId = $_POST['groupid'];
       $userId = getLoggedInUserId();
       addUserToGroup($userId, $groupId);
+
+    } if($action == "create-new-group"){
+
+      require_once "./changeDB/createGroup.php";
+      $userId = getLoggedInUserId();
+      createGroup($userId, $_POST['group-name'], $_POST['description']) ? header("location: ../groups.php") : print "404: An error occured";
+
+    } if($action == "create-new-post"){
+
+      require_once "./changeDB/createPost.php";
+      $userId = getLoggedInUserId();
+      createPost($userId, $_POST['group-name'], $_POST['post-body'], $_POST['yt-link'], $_FILES['file']);
+
+    } if($action == "update-profile"){
+
+      require_once "./changeDB/updateProfile.php";
+      $userId = getLoggedInUserId();
+      updateUserProfile($userId, $_POST['username'], $_POST['major'], $_POST['bio']);
+
+    } else if($action == "upload-profile-img"){
+
+      require_once "./changeDB/uploadProfileImg.php";
+      $userId = getLoggedInUserId();
+      uploadProfileImg($userId, $_FILES['file']);
 
     }
 
@@ -83,436 +116,8 @@
       $userInfo = getUserDataById($userId);
       print json_encode($userInfo);
 
-    }
+    } 
   } else {
     print "Invalid action submitted to process.php<br>\n";
   }
-
-  // Helper Functions
-
-  function isGroupMember($userId, $groupId){
-    require "../config/db.conf";
-
-    if($mysqli->connect_error)
-      exit("There was an error connecting to the database");
-
-    $query = "SELECT * FROM groupMemberships WHERE userid = $userId AND groupid = $groupId";
-
-    $result = $mysqli->query($query);
-
-    if($result){
-      $mysqli->close();
-      return TRUE;
-    } else {
-      $mysqli->close();
-      return FALSE;
-    }
-  }
-
-  function getLoggedInUserId(){
-    require "../config/db.conf";
-
-    if($mysqli->connect_error)
-      exit("There was an issue connecting to the database.<br>");
-
-    $username = $_COOKIE['userid'];
-
-    $result = $mysqli->query("SELECT * FROM users WHERE username = '$username'");
-
-    $row = mysqli_fetch_assoc($result);
-    $userId = $row['id'];
-
-    $mysqli->close();
-
-    return $userId;
-  }
-
-  function connectDB(){
-    require "../config/db.conf";
-
-    // If database connection fails
-    if($mysqli->connect_error){
-      return FALSE;
-    } else {
-      return $mysqli;
-    }
-  }
-
-  function redirectIfNotLoggedIn(){
-    // Make sure user is logged in
-    if(!isset($_COOKIE['userid'])){
-      header("location: ../login.php");
-      exit;
-    }
-  }
-
-  function handleLogin(){
-
-    $username = empty($_POST['username']) ? '' : $_POST['username'];
-    $password = empty($_POST['password']) ? '' : $_POST['password'];
-
-    $mysqli = connectDB();
-
-    // Stop SQL injections
-    $username = $mysqli->real_escape_string($username);
-    $password = $mysqli->real_escape_string($password);
-    
-    // Get all users from the users table in database
-    $query = "SELECT id FROM users WHERE username = '$username' AND userPassword = sha1('$password')";
-    
-    $result = $mysqli->query($query);
-
-    if($result){
-      if($result->num_rows == 1){
-        setcookie('userid', $username, time() + 1800, "/");
-        print("Logged in successfully");
-      } else {
-        print("Incorrect username or password.<br>Please double-check your username and password.");
-      }
-    } else {
-      print("Error. Please contact the system administrator");
-    }
-
-    $result->close();
-    $mysqli->close();
-  }
-
-  /*******************/
-  /* MANIPULATING DB */
-  /*******************/
-
-  function deleteGroupById($groupId){
-    $mysqli = connectDB();
-
-    $query = "DELETE FROM organizations WHERE id = $groupId";
-
-    if($mysqli->query($query) && deletePostsByGroupId($groupId)){
-      $mysqli->close();
-      return TRUE;
-    } else {
-      $mysqli->close();
-      return FALSE;
-    }
-  }
-
-  function deletePostsByGroupId($groupId){
-    $mysqli = connectDB();
-
-    $query = "DELETE FROM userPosts WHERE groupid = $groupId";
-
-    if($mysqli->query($query)){
-      $mysqli->close();
-      return TRUE;
-    } else {
-      $mysqli->close();
-      return FALSE;
-    }
-  }
-  
-  function addUserToGroup($userId, $groupId){
-    redirectIfNotLoggedIn();
-
-    $mysqli = connectDB();
-
-    // Add a new membership to the database
-    $query = "INSERT INTO groupMemberships (userid, groupid) VALUES ($userId, $groupId)";
-    $mysqli->query($query);
-
-    // Update the member count in the joined group
-    $query = "UPDATE organizations SET members = members + 1 WHERE id = $groupId";
-    $mysqli->query($query);
-
-    $mysqli->close();
-  }
-
-  function removeUserFromGroup($userId, $groupId){
-    redirectIfNotLoggedIn();
-
-    $mysqli = connectDB();
-
-    // Decrement the number of members of the group
-    $query = "UPDATE organizations SET members = members - 1 WHERE id = $groupId";
-    $mysqli->query($query);
-
-    // Remove the user's membership from memberships table
-    $query = "DELETE FROM groupMemberships WHERE userid = $userId AND groupid = $groupId";
-    $result = $mysqli->query($query);
-
-    // Check the no. of members in group, and delete it if none are left
-    $query = "SELECT * FROM organizations WHERE id = $groupId";
-    $result = $mysqli->query($query);
-    $row = mysqli_fetch_assoc($result);
-    $numMembers = $row['members'];
-
-    if($numMembers == 0){
-      if(deleteGroupById($groupId)){
-        $result->close();
-        $mysqli->close();
-        return TRUE;
-      } else {
-        $result->close();
-        $mysqli->close();
-        return FALSE;
-      }
-    }
-
-    $result->close();
-    $mysqli->close();
-    return TRUE;
-  }
-
-  /***************************/
-  /* RETRIEVING DATA FROM DB */
-  /***************************/
-
-  // Returns an array of associative arrays that each represent a post from the group with the passed id
-  function getPostsByGroupId($groupId){
-    $userId = getLoggedInUserId();
-
-    if(isGroupMember($userId, $groupId)){
-      $mysqli = connectDB();
-
-      $query = "SELECT * FROM userPosts WHERE groupid = $groupId ORDER BY addDate DESC";
-
-      $result = $mysqli->query($query);
-
-      $posts = array();
-
-      while($row = mysqli_fetch_assoc($result)) {
-        $post = array(
-          'userId' => $row['userid'],
-          'text' => $row['postText'],
-          'link' => $row['youtubeLink'],
-          'fileName' => $row['fileName'],
-          'dateCreated' => $row['addDate']
-        );
-        array_push($posts, $post);
-      }
-
-      $mysqli->close();
-      $result->close();
-
-      return $posts;
-    } else {
-      print "Only logged in members of this group are allowed access to its posts<br>";
-    }
-  }
-
-  function getGroupDataById($groupId){
-    redirectIfNotLoggedIn();
-
-    $mysqli = connectDB();
-
-    $query = "SELECT * FROM organizations WHERE id = $groupId";
-    $result = $mysqli->query($query);
-    $row = mysqli_fetch_assoc($result);
-
-    $dateCreated = $row['addDate'];
-    $time = strtotime($dateCreated);
-
-    $groupInfo = array(
-      'name' => $row['groupName'],
-      'description' => $row['groupDescription'],
-      'numMembers' => $row['members'],
-      'numPosts' => $row['numPosts'],
-      'dateCreated' => date("m/d/y", $time)
-    );
-    
-    $mysqli->close();
-    return $groupInfo;
-  }
-
-  function getUserNameById($userId){
-    $mysqli = connectDB();
-    
-    $result = $mysqli->query("SELECT * FROM users WHERE id = $userId");
-
-    $row = mysqli_fetch_assoc($result);
-
-    return $row['username'];
-  }
-
-  function getUserGroupsIds($userId){
-    redirectIfNotLoggedIn();
-
-    $mysqli = connectDB();
-
-    $query = "SELECT groupid FROM groupMemberships WHERE userid = $userId ORDER BY groupid ASC";
-
-    $result = $mysqli->query($query);
-
-    $groupIds = array();
-
-    while($row = mysqli_fetch_assoc($result)) {
-      $groupIds[] = $row['groupid'];
-    }
-
-    return $groupIds;
-    
-    $mysqli->close();
-  }
-
-  function getFeedPostsByUserId($userId){
-    redirectIfNotLoggedIn();
-    $groupIds = getUserGroupsIds($userId);
-    
-    $firstGroupId = array_pop($groupIds);
-
-    $query = "SELECT * FROM userPosts WHERE groupid = ".$firstGroupId;
-
-    foreach($groupIds as $groupId){
-      $query .= " OR groupid = ".$groupId;
-    }
-    unset($groupId);
-
-    $query .= " ORDER BY addDate DESC";
-
-    $mysqli = connectDB();
-
-    $result = $mysqli->query($query);
-
-    $posts = array();
-
-    while($row = mysqli_fetch_assoc($result)) {
-      $post = array(
-        'userId' => $row['userid'],
-        'groupId' => $row['groupid'],
-        'text' => $row['postText'],
-        'link' => $row['youtubeLink'],
-        'fileName' => $row['fileName'],
-        'dateCreated' => $row['addDate']
-      );
-      array_push($posts, $post);
-    }
-
-    return $posts;
-
-    $mysqli->close();
-  }
-  // Returns an array of of ids of all the groups the user with the passed in id is not currently a member of
-  function getNoMembershipIds($userId){
-    redirectIfNotLoggedIn();
-
-    $userGroupIds = getUserGroupsIds($userId);
-
-    $mysqli = connectDB();
-
-    $nonMemberIds = array();
-
-    // If the user is in at least one group...
-    if(count($userGroupIds)){
-
-      // Build a query string that selects all groups the user is not currently a member of
-      $mustNotEqual = "";
-      foreach($userGroupIds as &$id)
-        $mustNotEqual .= " AND id != ".$id;
-
-      $query = "SELECT id FROM organizations WHERE id != -1".$mustNotEqual;
-      $result = $mysqli->query($query);
-
-      while($row = mysqli_fetch_assoc($result)) 
-        $nonMemberIds[] = $row['id'];
-
-    } else {
-      $query = "SELECT id FROM organizations";
-      $result = $mysqli->query($query);
-
-      while($row = mysqli_fetch_assoc($result))
-        $nonMemberIds[] = $row['id'];
-    }
-
-    $mysqli->close();
-    return $nonMemberIds;
-  }
-
-  function getUserDataById($userId){
-    redirectIfNotLoggedIn();
-    $mysqli = connectDB();
-
-    $query = "SELECT * FROM users WHERE id = $userId";
-    $result = $mysqli->query($query);
-
-    $row = mysqli_fetch_assoc($result);
-
-    $userData = array(
-      'name' => $row['fullName'],
-      'email' => $row['email'],
-      'username' => $row['username'],
-      'major' => $row['major'],
-      'bio' => $row['bio'],
-      'dateJoined' => $row['addDate']
-    );
-
-    $mysqli->close();
-    $result->close();
-    return $userData;
-  }
-
-  /**************************/
-  /* READING VALUES FROM DB */
-  /**************************/
-
-  // Returns true if the user with the passed id has uploaded a profile image and false if not
-  function hasProfileImg($userId){
-    $mysqli = connectDB();
-    
-    $result = $mysqli->query("SELECT * FROM profileimg WHERE userid = $userId");
-
-    $row = mysqli_fetch_assoc($result);
-
-    if($row['status'] == 0){
-      $mysqli->close();
-      return TRUE; 
-    } else {
-      $mysqli->close();
-      return FALSE;
-    }
-  }
-  
-  function isEmailValid($email){
-    $mysqli = connectDB();
-
-    $query = "SELECT id FROM users WHERE email = '$email'";
-
-    if($mysqli->query($query)->num_rows == 1){
-      $mysqli->close();
-      return FALSE;
-    } else {
-      $mysqli->close();
-      return TRUE;
-    }
-  }
-
-  function isUsernameValid(){
-    $mysqli = connectDB();
-
-    $username = empty($_POST['username']) ? '' : $_POST['username'];
-
-    $query = "SELECT id FROM users WHERE username = '$username'";
-
-    if($mysqli->query($query)->num_rows == 1){
-      print FALSE;
-    } else {
-      print TRUE;
-    }
-
-    $mysqli->close();
-  }
-
-  function isGroupNameValid(){
-    $mysqli = connectDB();
-
-    $groupName = empty($_POST['name']) ? '' : $_POST['name'];
-
-    $query = "SELECT * FROM organizations WHERE groupName = '$groupName'";
-
-    if($mysqli->query($query)->num_rows == 1){
-      print FALSE;
-    } else {
-      print TRUE;
-    }
-
-    $mysqli->close();
-  }
-
 ?>

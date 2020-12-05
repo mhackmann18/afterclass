@@ -1,9 +1,14 @@
 <?php
-  $main_dir = $_SERVER["DOCUMENT_ROOT"] . "/afterclass";
+  require "../../config/db.conf";
+
+  // If database connection fails
+  if($mysqli->connect_error){
+    exit("Failed to connect to database.");
+  } 
 
   // Makes sure there is no user logged in
   if(isset($_COOKIE['userid'])){
-    header("location: ../index.php");
+    header("location: ../../index.php");
     exit;
   }
 
@@ -13,16 +18,6 @@
   $major = empty($_POST['major']) ? '' : $_POST['major'];
   $username = empty($_POST['username']) ? '' : $_POST['username'];
   $password = empty($_POST['password']) ? '' : $_POST['password'];
-
-  // Connect to SQL database
-  require_once($main_dir . "/config/db.conf");
-
-  // Display error and exit if connection faied
-  if($mysqli->connect_error){
-    $error = "There was an issue connecting to the SQL database.<br>Please try again later.";
-    require $main_dir . "/createAccount.php";
-    exit;
-  }
 
   // Stop SQL Injections
   $username = $mysqli->real_escape_string($username);
@@ -34,7 +29,7 @@
   $query = "INSERT INTO users (fullName, email, username, userPassword, major, addDate) VALUES ('$name', '$email', '$username', sha1('$password'), '$major', now())";
 
   // If user was successfully added to database, set profile image to default, create login cookie and redirect to index.php
-  if($mysqli->query($query) === TRUE){
+  if($mysqli->query($query)){
 
     $query = "SELECT * FROM users WHERE username = '$username'";
     $result = $mysqli->query($query);
@@ -47,7 +42,7 @@
     }
 
     setcookie('userid', $username, time() + 1800, "/");
-    header("location: ../index.php");
+    header("location: ../../index.php");
   } 
   // If there was an issue adding the user to database, display error and redirect to createAccount.php
   else {
@@ -59,7 +54,7 @@
     } else {
       $error = "An account already exists using that email.<br>Please use another email.";
     }
-    require $main_dir . '/createAccount.php';
+    require "/var/www/html/afterclass/createAccount.php";
   }
 
   $mysqli->close();
