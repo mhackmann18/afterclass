@@ -222,10 +222,15 @@ div.space-between {
   background-color: lightgray;
 }
 
+.pointer:hover {
+  cursor: pointer;
+}
+
 /* Text Colors */
 .txt-black { color: black; }
 .txt-darkgrey { color: #333; }
 .txt-darkgray { color: #333; }
+.txt-gray, .txt-grey { color: grey; }
 
 /* Font-weights */
 .txt-bold { font-weight: 800; }

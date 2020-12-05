@@ -68,8 +68,7 @@
         </div>
       </div>
     </div>
-    
-    
+
     <div id="overlay"></div>
   </div>
 

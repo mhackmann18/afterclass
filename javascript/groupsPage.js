@@ -1,13 +1,9 @@
-const createGroup = document.getElementById("create-new-group");
 const createGroupForm = document.getElementById("create-group-form");
 const overlay = document.getElementById("overlay");
-const closeFormBtn = document.getElementById("cancel-create-group-btn");
 const nameInput = createGroupForm.querySelector("input");
 const bioInput = createGroupForm.querySelector("textarea");
 const createGroupErr = document.getElementById("create-group-err-msg");
-const yourGroupsDiv = document.getElementById("your-groups");
 const leaveGroupWindow = document.getElementById("leave-group-confirmation-window");
-const confirmLeaveGroupBtn = document.getElementById("leave-group-confirm-btn");
 
 /***********************/
 /* Group Creation Form */
@@ -16,36 +12,34 @@ const confirmLeaveGroupBtn = document.getElementById("leave-group-confirm-btn");
 let nameIsValid = true;
 let bioIsValid = true;
 
-createGroup.onclick = function(){
-  overlay.style.display = "block";
-  createGroupForm.style.display = "block";
+document.getElementById("create-new-group").onclick = function(){
+  showElement(overlay);
+  showElement(createGroupForm);
 }
 
 overlay.onclick = function(){
-  overlay.style.display = "none";
-  leaveGroupWindow.style.display = "none";
-  createGroupForm.style.display = "none";
+  hideElement(overlay);
+  hideElement(leaveGroupWindow);
+  hideElement(createGroupForm);
   clearFields();
 }
 
-closeFormBtn.onclick = function(e){
+document.getElementById("cancel-create-group-btn").onclick = function(e){
   e.preventDefault();
-  overlay.style.display = "none";
-  createGroupForm.style.display = "none";
+  hideElement(overlay);
+  hideElement(createGroupForm);
   clearFields();
 }
 
 nameInput.onkeyup = function(e){
   $.post("/afterclass/php/process.php", { action: 'check-group-name', name: e.target.value }, res => {
     if(!res){
-      console.log("Group name is already taken.");
       nameIsValid = false;
-      createGroupErr.style.display = "block";
+      showElement(createGroupErr);
       createGroupErr.innerHTML = "That group name is already taken.<br>Please choose a different group name.";
     } else {
-      console.log("Group name is available.");
       nameIsValid = true;
-      createGroupErr.style.display = "none";
+      hideElement(createGroupErr);
       createGroupErr.innerHTML = "";
     }
   });
@@ -53,44 +47,39 @@ nameInput.onkeyup = function(e){
 
 bioInput.onkeyup = function(e){
   if(e.target.value.length > 500){
-    createGroupErr.style.display = "block";
+    showElement(createGroupErr);
     createGroupErr.innerHTML = "Description must be less than 350 characters.";
     bioIsValid = false;
-    console.log("Too long");
   } else {
-    createGroupErr.style.display = "none";
+    hideElement(createGroupErr);
     createGroupErr.innerHTML = "";
     bioIsValid = true;
-    console.log("All good");
   }
 }
 
 createGroupForm.onsubmit = function(e){
   if(!nameInput.value && !bioInput.value){
     e.preventDefault();
-    createGroupErr.style.display = "block";
+    showElement(createGroupErr);
     createGroupErr.innerHTML = "Please enter a name and description for your group.";
   } else if(!nameIsValid && !bioIsValid){
     e.preventDefault();
   } else if(!nameIsValid){
     e.preventDefault();
-    createGroupErr.style.display = "block";
+    hideElement(createGroupErr);
     createGroupErr.innerHTML = "That group name is already taken.<br>Please choose a different group name.";
   } else if(!nameInput.value){
     e.preventDefault();
-    createGroupErr.style.display = "block";
+    showElement(createGroupErr);
     createGroupErr.innerHTML = "Please enter a name for your group.";
   } else if(!bioInput.value){
     e.preventDefault();
-    createGroupErr.style.display = "block";
+    showElement(createGroupErr);
     createGroupErr.innerHTML = "Please enter a description for your group.";
   } 
 }
 
-function clearFields(){
-  nameInput.value = "";
-  bioInput.value = "";
-}
+
 
 /********************************/
 /* Load Groups from Memberships */
@@ -99,39 +88,61 @@ function clearFields(){
 document.querySelector("body").onload = function(){
   $.get("/afterclass/php/process.php", { action: "get-membership-ids" }, res => {
     const ids = JSON.parse(res);
-    if(ids[0] != 0){
+    if(ids[0] != 0)
       ids.forEach(id => showGroupCard(Number(id)));
-    }
   });
 }
 
 function showGroupCard(id){
-  $.get("/afterclass/php/process.php", { action: "get-group-card", groupid: id }, res => {
+  $.get("/afterclass/php/process.php", { action: "get-group-info", groupid: id }, res => {
+    group = JSON.parse(res);
     const card = document.createElement("div");
     card.classList.add("group-page-info");
-    card.innerHTML += res;
-    yourGroupsDiv.appendChild(card);
-    addButtonEvents(card, id);
+
+    card.innerHTML += 
+    `<h1>${group.name}</h1>
+    <h3>Description</h3>
+    <div class='group-page-desc'>${group.description}</div>
+    <div>
+      <ul>
+        <li>Members: ${group.numMembers}</li>
+        <li>Created: ${group.dateCreated}</li>
+        <li>Posts: ${group.numPosts}</li>
+      </ul>
+      <div>
+        <a href='./group.php?groupid=${id}' class='btn btn-grey'>View Feed</a>
+        <button class='btn-gold btn leave-group-btn'>Leave</button>
+      </div>
+    </div>`;
+
+    document.getElementById("your-groups").appendChild(card);
+
+    card.querySelector(".leave-group-btn").onclick = function(){
+      hideElement(leaveGroupWindow);
+      showElement(overlay);
+      document.getElementById("leave-group-confirm-btn").onclick = $.post("./php/process.php", { action: "leave-group", groupid: id }, () => location.reload());
+    }
   });
 }
 
-function addButtonEvents(groupDiv, id){
-  const leaveBtn = groupDiv.querySelector(".leave-group-btn");
-  const groupTitle = groupDiv.querySelector("h1").innerHTML;
-
-  leaveBtn.onclick = function(){
-    leaveGroupWindow.querySelector('span').innerHTML = groupTitle;
-    leaveGroupWindow.style.display = "block";
-    overlay.style.display = "block";
-    confirmLeaveGroupBtn.onclick = function(){
-      $.post("./php/process.php", { action: "leave-group", groupid: id }, () => {
-        location.reload();
-      });
-    }
-  }
+document.getElementById("leave-group-cancel-btn").onclick = function(){
+  hideElement(leaveGroupWindow);
+  hideElement(overlay);
 }
 
-document.getElementById("leave-group-cancel-btn").onclick = function(){
-  leaveGroupWindow.style.display = "none";
-  overlay.style.display = "none";
+/********************/
+/* HELPER FUNCTIONS */
+/********************/
+
+function hideElement(el){
+  el.style.display = "none";
+}
+
+function showElement(el){
+  el.style.display = "block";
+}
+
+function clearFields(){
+  nameInput.value = "";
+  bioInput.value = "";
 }

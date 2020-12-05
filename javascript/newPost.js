@@ -32,8 +32,7 @@ document.querySelector("body").onload = function(){
 async function getGroupNameById(id){
   let groupName;
   await $.get("/afterclass/php/process.php", { action: 'get-group-info', groupid: id }, res => {
-    dataArr = JSON.parse(res);
-    groupName = dataArr[0];
+    groupName = JSON.parse(res).name;
   });
   return groupName;
 }
@@ -47,9 +46,12 @@ function showPreviewWindow(){
   previewContainer.querySelector(".post-date").innerHTML = getCurrentDateString();
 
   if(fileInput.value){
-    console.log("A file is being uploaded");
-    mediaDiv.innerHTML = '<img alt="post-picture"></img>';
-    readURL(fileInput);
+    if(fileInput.value.slice(-3) === "pdf"){
+      mediaDiv.innerHTML = '<embed src="./uploads/criteria.pdf" id="post-preview-file-display"/>';
+    } else {
+      mediaDiv.innerHTML = '<img id="post-preview-file-display" alt="post-picture"></img>';
+    }
+    displayFile(fileInput);
   }
 
   if(ytLinkInput.value){
@@ -168,12 +170,12 @@ function getCurrentDateString(){
   return `${month}/${day}/${year}`;
 }
 
-function readURL(input){
+function displayFile(input){
   if(input.files && input.files[0]){
     let reader = new FileReader();
 
     reader.onload = function(e){
-      document.querySelector(".post-media").querySelector("img").src = e.target.result;
+      document.getElementById("post-preview-file-display").src = e.target.result;
     }
 
     reader.readAsDataURL(input.files[0]);

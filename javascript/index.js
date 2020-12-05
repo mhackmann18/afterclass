@@ -80,7 +80,7 @@ async function displayPost(post){
   newPostElement.innerHTML = 
     `<div class="post-head">
       <div class="profile-img-container">${profileImg}</div>
-      <p class="who-when">${username} posted in ${groupName} on ${jsDate}</p>
+      <p class="who-when"><a href="./profile.php?userid=${post.userId}" class="txt-darkgrey">${username}</a> posted in <a href="./group.php?groupid=${post.groupId}" class="txt-darkgrey">${groupName}</a> on ${jsDate}</p>
     </div>
     <p class="post-text">${post.text}</p>
     <div class="post-media">
@@ -102,6 +102,7 @@ async function displayPost(post){
 }
 
 async function getGroupNameById(id){
-  let name = "(group name here)";
+  let name;
+  await $.get("./php/process.php", { action: 'get-group-info', groupid: id }, res => name = JSON.parse(res).name);
   return name;
 }

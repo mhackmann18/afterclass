@@ -54,7 +54,7 @@
             header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
             header("Cache-Control: post-check=0, pre-check=0", false);
             header("Pragma: no-cache");
-            header("location: /afterclass/profile.php?uploadsuccess");
+            header("location: /afterclass/yourProfile.php?uploadsuccess");
           } else {
             $error = "There was an error saving your image to the server.<br>Please contact the system administrator.";
           }
@@ -68,6 +68,6 @@
       $error = "File extension must be .jpg.<br>Check that file extension is .jpg and not .jpeg.";
     }
   }
-  require $main_dir."/profile.php";
+  require $main_dir."/yourProfile.php";
   $mysqli->close();
 ?>

@@ -8,7 +8,7 @@ logoutBtn.onclick = () => {
 }
 
 userButton.onclick = () => {
-  window.location.replace("./profile.php");
+  window.location.replace("./yourProfile.php");
 }
 
 // Credit to https://stackoverflow.com/questions/31223341/detecting-scroll-direction/31223774

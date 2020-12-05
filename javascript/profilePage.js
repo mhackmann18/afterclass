@@ -134,11 +134,11 @@ saveChangesBtn.onclick = function(){
     inputErrMsg.innerHTML = "Please enter a major.";
     canSubmit = false;
   }
-  // Submit to updateProfile.php
+  // Submit to updateyourProfile.php
   if(canSubmit){
-    $.post("./php/updateProfile.php", { username: usernameVal, major: majorVal, bio: bioVal }, res => {
+    $.post("./php/updateyourProfile.php", { username: usernameVal, major: majorVal, bio: bioVal }, res => {
       if(res !== 'logout'){
-        window.location.replace("./profile.php");
+        window.location.replace("./yourProfile.php");
       } else {
         window.location.replace("./login.php");
       }

@@ -103,7 +103,7 @@ async function displayPost(post){
   newPostElement.innerHTML = 
     `<div class="post-head">
       <div class="profile-img-container">${profileImg}</div>
-      <p class="who-when">${username} posted on ${jsDate}</p>
+      <p class="who-when"><a href="./profile.php?userid=${post.userId}" class="txt-darkgrey">${username}</a> posted on ${jsDate}</p>
     </div>
     <p class="post-text">${post.text}</p>
     <div class="post-media">

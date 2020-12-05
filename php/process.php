@@ -1,5 +1,4 @@
 <?php 
-
   if(!empty($_POST['action'])){
 
     $action = $_POST['action'];
@@ -47,10 +46,6 @@
       $groupIds = getUserGroupsIds($userId);
       print json_encode($groupIds);
 
-    } else if($action == 'get-group-card'){
-
-      getGroupCard();
-
     } else if($action == 'get-no-membership-ids'){
 
       $userId = getLoggedInUserId();
@@ -82,62 +77,15 @@
       $userId = getLoggedInUserId();
       print json_encode(getFeedPostsByUserId($userId));
 
+    } else if($action == "get-user-info"){
+
+      $userId = $_GET['userid'];
+      $userInfo = getUserDataById($userId);
+      print json_encode($userInfo);
+
     }
   } else {
     print "Invalid action submitted to process.php<br>\n";
-  }
-
-  function getGroupCard(){
-    if(!isset($_COOKIE['userid'])){
-      header("location: ../login.php");
-      exit;
-    }
-
-    require_once "../config/db.conf";
-
-    if($mysqli->connect_error){
-      print "There was an issue connecting to the database.<br>Please try again later.";
-      exit;
-    }
-
-    $groupId = $_GET['groupid'];
-
-    $query = "SELECT * FROM organizations WHERE id = $groupId";
-
-    $result = $mysqli->query($query);
-
-    if($result->num_rows == 1){
-      $row = mysqli_fetch_assoc($result);
-      $groupName = $row['groupName'];
-      $groupDesc = $row['groupDescription'];
-      $numMembers = $row['members'];
-      $numPosts = $row["numPosts"];
-      $dateCreated = $row["addDate"];
-
-      $time = strtotime($dateCreated);
-      $displayDate = date("m/d/y", $time);
-
-      print 
-      "<h1>$groupName</h1>
-        <h3>Description</h3>
-        <div class='group-page-desc'>$groupDesc</div>
-        <div>
-          <ul>
-            <li>Members: $numMembers</li>
-            <li>Created: $displayDate</li>
-            <li>Posts: $numPosts</li>
-          </ul>
-          <div>
-            <a href='./group.php?groupid=$groupId' class='btn btn-grey'>View Feed</a>
-            <button class='btn-gold btn leave-group-btn'>Leave</button>
-          </div>
-        </div>";
-    } else {
-      print "There was an issue getting group data.<br>Please contact system administrator.";
-      exit;
-    }
-    
-    $mysqli->close();
   }
 
   // Helper Functions
@@ -475,6 +423,29 @@
 
     $mysqli->close();
     return $nonMemberIds;
+  }
+
+  function getUserDataById($userId){
+    redirectIfNotLoggedIn();
+    $mysqli = connectDB();
+
+    $query = "SELECT * FROM users WHERE id = $userId";
+    $result = $mysqli->query($query);
+
+    $row = mysqli_fetch_assoc($result);
+
+    $userData = array(
+      'name' => $row['fullName'],
+      'email' => $row['email'],
+      'username' => $row['username'],
+      'major' => $row['major'],
+      'bio' => $row['bio'],
+      'dateJoined' => $row['addDate']
+    );
+
+    $mysqli->close();
+    $result->close();
+    return $userData;
   }
 
   /**************************/

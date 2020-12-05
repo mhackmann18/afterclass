@@ -54,7 +54,7 @@
     $fileActualExt = strtolower(end($fileExt));
 
     // All of the allowed file extensions
-    $allowed = array('jpg', 'jpeg', 'png');
+    $allowed = array('jpg', 'jpeg', 'png', 'pdf');
 
     if(in_array($fileActualExt, $allowed)){
       // If there was no error uploading file
