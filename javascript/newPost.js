@@ -17,7 +17,7 @@ document.querySelector("body").onload = function(){
 
 // Show a preview popup in the UI of what the post will look like before confirmation
 function showConfirmationWindow(){
-  previewContainer.style.display = "table";
+  previewContainer.style.display = "block";
   displayBlock(document.getElementById("post-preview"), overlay);
 
   previewContainer.querySelector(".post-text").innerHTML = postTextarea.value;
