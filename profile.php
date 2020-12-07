@@ -15,7 +15,7 @@
   $username = $_COOKIE['userid'];
   setcookie('userid', $username, time() + 1800, "/");
 ?>
-<!-- HANDLE WHEN THE USERID DOESNT EXIST -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,21 +24,21 @@
   <script src="https://kit.fontawesome.com/1b8d9746c3.js" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <link rel="stylesheet" href="/afterclass/css/mainStyles.css">
-  <title><?=$username?> | AfterClass MU</title>
+  <title>AfterClass | Profile</title>
 </head>
 <body>
   <?php require '/var/www/html/afterclass/navbar.php'; ?>
 
   <div class="container">
     <div id="profile-left">
-      <div id="profile-page-image-container">
+      <div id="profile-page-image-container" class="fill">
         <img id="profile-page-img" alt='blank-profile-image'>
       </div>
-      <h1 id="profile-header" class="txt-bold">Joh DOe</h1>
+      <h1 id="profile-header" class="txt-bold"></h1>
       <ul id="profile-page-info">
-        <li>Email: msnsh@sgsyg</li>
-        <li>Username: <span id='username'>test</span></li>
-        <li>Major: <span id='major'>CS</span></li>
+        <li></li>
+        <li>Username: <span id='username'></span></li>
+        <li>Major: <span id='major'></span></li>
       </ul>
     </div>
     <div id="profile-right">

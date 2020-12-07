@@ -1,14 +1,17 @@
 const groupsDiv = document.getElementById("groups");
-
-console.log("jhdjhsdjhsdjh");
+const spinner = document.getElementById("spinner");
+const noGroupsMsg = document.getElementById("find-groups-no-groups");
 
 document.querySelector("body").onload = function(){
+  spinner.style.display = "block";
   $.get("/afterclass/php/process.php", { action: "get-no-membership-ids" }, res => {
     const ids = JSON.parse(res);
-    console.log(ids);
     if(ids[0] != 0){
       ids.forEach(id => showGroupCard(Number(id)));
     }
+    if(!ids.length)
+      noGroupsMsg.style.display = "block";
+    spinner.style.display = "none";
   });
 }
 

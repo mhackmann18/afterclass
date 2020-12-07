@@ -2,6 +2,8 @@
   function createPost($userId, $postGroupId, $postText, $postLink, $file){
     $mysqli = connectDB();
 
+    $postText = $mysqli->real_escape_string($postText);
+
     // If a youtube video is being uploaded
     if($postLink){
       // Modify the passed in youtube link to be an embed link
@@ -10,9 +12,7 @@
 
       $query = "INSERT INTO userPosts (userid, groupid, postText, youtubeLink, addDate) VALUES ($userId, $postGroupId, '$postText', '$embedLink', now())";
 
-      if($mysqli->query($query)){
-        print "Youtube video post successfully uploaded.<br>";
-      } else {
+      if(!$mysqli->query($query)){
         exit("There was an error uploading the youtube post.");
       }
     } 
@@ -38,9 +38,7 @@
             $fileDestination = "/var/www/html/afterclass/uploads/".$fileNameNew;
             if(copy($fileTmpName, $fileDestination)){
               $query = "INSERT INTO userPosts (userid, groupid, postText, fileName, addDate) VALUES ($userId, $postGroupId, '$postText', '$fileNameNew', now())";
-              if($mysqli->query($query)){
-                print "Image post was successfully uploaded.";
-              } else {
+              if(!$mysqli->query($query)){
                 exit("There was an error uploading the image post.");
               }
             } else {
@@ -60,16 +58,15 @@
     else {
       $query = "INSERT INTO userPosts (userid, groupid, postText, addDate) VALUES ($userId, $postGroupId, '$postText', now())";
 
-      if($mysqli->query($query)){
-        print "Post with no media was successfully uploaded.<br>";
-      } else {
-        exit("There was an error uploading the no media post.");
+      if(!$mysqli->query($query)){
+        exit($mysqli->error);
       }
     }
 
-    //After post is uploaded, update number of posts for the corresponding group
-
+    // After post is uploaded, update number of posts for the corresponding group
     $mysqli->query("UPDATE organizations SET numPosts = numPosts + 1 WHERE id = $postGroupId");
+
+    header("location: ../group.php?groupid=$postGroupId");
 
     $mysqli->close();
   }

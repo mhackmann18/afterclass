@@ -29,6 +29,16 @@
     <section id="groups">
     <!-- Will be populated with group cards -->
     </section>
+
+    <div class="flex-center"><img src="./img/spinner.gif" alt="loading..." class="margin-top-lrg" id="spinner"></div>
+
+    <div class="center-on-page">
+      <div class="middle">
+        <div id="find-groups-no-groups" class="txt-lightgrey">
+          <h2>No groups to show</h2>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script src="./javascript/findGroups.js"></script>

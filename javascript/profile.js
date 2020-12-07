@@ -10,11 +10,12 @@ document.querySelector("body").onload = () => {
       document.getElementById("profile-page-groups").innerHTML += `<li><a href='/afterclass/group.php?groupid=${groupId}'>${JSON.parse(res).name}</a></li>`;
     });
   }));
+  // Load user's profile img if they have one
   $.get("./php/process.php", { action: "check-profile-img", userid: userId }, res => {
     if(res){
-      document.getElementById("profile-page-img").src = `./uploads/profile${userId}.jpg#` + new Date().getTime();
+      document.getElementById("profile-page-img").src = `./uploads/profile${userId}.jpg?t=` + new Date().getTime();
     } else {
-      document.getElementById("profile-page-img").src = "./img/blank-profile.jpg#" + new Date().getTime();
+      document.getElementById("profile-page-img").src = "./img/blank-profile.jpg?t=" + new Date().getTime();
     }
   });
 }

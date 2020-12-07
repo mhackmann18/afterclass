@@ -80,6 +80,64 @@ input {
 /* || UTILITIES */
 /****************/
 
+.underline { text-decoration: underline; }
+
+.pdf-container {
+  overflow: hidden;
+  padding-top: 130%;
+  position: relative;
+}
+
+.pdf-container embed {
+  border: 0;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+img#spinner {
+  align-self: center;
+  width: 70px;
+  display: none;
+}
+
+/* Make an image fill its container without distorting 
+https://stackoverflow.com/questions/14142378/how-can-i-fill-a-div-with-an-image-while-keeping-it-proportional */
+
+.fill {
+  display: flex;
+  justify-content: center;
+  overflow: hidden
+}
+
+.fill img {
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+}
+
+/* Make an iframe keep its aspect ratio an allow resizing */
+
+.iframe-container {
+  overflow: hidden;
+  /* 16:9 aspect ratio */
+  padding-top: 56.25%;
+  position: relative;
+}
+
+.iframe-container iframe {
+  border: 0;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+/* Centering an element on the page with */
+
 .outer {
   display: table;
   position: absolute;
@@ -94,6 +152,25 @@ input {
   display: table-cell;
   vertical-align: middle;
 }
+
+/* Center an element fixed on the page */
+
+.center-on-page {
+  display: table;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -3; 
+}
+
+.center-on-page .middle {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+/*********************/
 
 div.space-between {
   display: flex;
@@ -119,6 +196,7 @@ div.space-between {
 .btn-gold {
   background-color: var(--mu-color);
   padding: 12px 16px;
+  color: black;
 }
 
 .btn-gray {
@@ -143,12 +221,24 @@ div.space-between {
   width: 50px;
 }
 
+/* padding */
+
 .padding-bottom-mid {
   padding-bottom: 25px;
 }
 
+.padding-sides-mid {
+  padding: 0 25px;
+}
+
+/* margin */
+
 .margin-top-mid {
   margin-top: 25px;
+}
+
+.margin-top-lrg {
+  margin-top: 100px;
 }
 
 .flex-center {
@@ -194,7 +284,6 @@ div.space-between {
   bottom: 0;
   background-color: rgba(0,0,0,0.5); 
   z-index: 2; 
-  cursor: pointer; 
   display: none;
 }
 
@@ -231,6 +320,8 @@ div.space-between {
 .txt-darkgrey { color: #333; }
 .txt-darkgray { color: #333; }
 .txt-gray, .txt-grey { color: grey; }
+.txt-lightgrey, .txt-lightgray { color: lightgray; }
+.txt-gold { color: var(--mu-color); }
 
 /* Font-weights */
 .txt-bold { font-weight: 800; }
@@ -395,13 +486,6 @@ div.post {
 
 div.post-media {
   margin-top: 25px;
-  display: flex;
-  justify-content: center;
-}
-
-.post-media img {
-  max-width: 100%;
-  max-height: 66vh;
 }
 
 .post-media iframe {
@@ -422,14 +506,6 @@ div.post-media {
   overflow: hidden;
 }
 
-img.profile-img {
-  width: 100%;
-}
-
-.post-head img.profile-img:hover {
-  cursor: pointer;
-}
-
 .post-head p.who-when {
   display: inline-block;
   color: gray;
@@ -439,6 +515,21 @@ img.profile-img {
   margin-top: 20px;
   line-height: 1.6;
 }
+
+.post-img-container img {
+  max-height: 40vw;
+  max-width: 100%;
+}
+
+#feed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#feed .post:last-child { margin-bottom: 30px; }
+
 /******************/
 /* || STORE PAGES */
 /******************/
@@ -520,7 +611,9 @@ img.profile-img {
   clear: left;
 }
 
-#profile-left img { max-width: 100%; }
+#profile-left img { 
+  object-fit: cover;
+}
 
 #profile-left ul#profile-page-info {
   display: flex;
@@ -771,6 +864,13 @@ div#leave-group-confirmation-window button {
   width: 80px;
 }
 
+p#no-groups-msg {
+  text-align: center;
+  color: lightgray;
+  font-size: 20px;
+  margin-top: 25vh;
+}
+
 /* FIND GROUPS PAGE */
 
 #find-groups-btns {
@@ -782,12 +882,25 @@ button#clear-search-btn {
   margin-right: 10px;
 }
 
+#groups {
+  margin-bottom: 30px;
+}
+
+#find-groups-no-groups {
+  display: none;
+  text-align: center;
+}
+
 /* GROUP FEED PAGE */
 
-div#group-feed {
+div#home-feed {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+}
+
+div#home-feed .post:last-child {
   margin-bottom: 30px;
 }
 
@@ -804,6 +917,12 @@ p#feed-page-no-posts-msg {
   margin-top: 100px;
   color: lightgray;
   font-size: 22px;
+}
+
+div#home-no-posts-msg {
+  text-align: center;
+  line-height: 1.8;
+  display: none;
 }
 
 /* NEW POST PAGE */
@@ -901,4 +1020,10 @@ iframe#post-preview-video {
 
 embed#post-preview-file-display {
   width: 90%;
+}
+
+/* HOMEPAGE */
+
+p#feed-no-posts-msg {
+  margin-top: 100px;
 }

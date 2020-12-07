@@ -1,5 +1,9 @@
 <!-- HTTPS Redirect -->
-<?php require $_SERVER["DOCUMENT_ROOT"] . "/afterclass/php/redirect.php"; ?>
+<?php 
+  require $_SERVER["DOCUMENT_ROOT"] . "/afterclass/php/redirect.php"; 
+  if(isset($_COOKIE['userid']))
+    header("location: index.php");
+?>
 
 <!DOCTYPE html>
 <html lang="en">

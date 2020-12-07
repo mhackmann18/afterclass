@@ -18,8 +18,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://kit.fontawesome.com/1b8d9746c3.js" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://formden.com/static/assets/demos/bootstrap-iso/bootstrap-iso/bootstrap-iso.css">
   <link rel="stylesheet" href="./css/mainStyles.css">
-  <title>AfterClass | Join Groups</title>
+  <title>AfterClass | Group Page</title>
 </head>
 <body>
   <?php require 'navbar.php'; ?>
@@ -41,13 +42,14 @@
       </div>
     </div>
     <h1 id="feed-page-feed-header">Activity in <span id="feed-page-group-name"></span></h1>
-    <div id="group-feed">
+    <div id="feed">
     </div>
+    <div class="flex-center"><img id="spinner" class="margin-top-lrg" src="./img/spinner.gif" alt="loading..."></div>
   </div>
   
   <script type="text/javascript">
     const groupId = <?php print $groupId ?>;
   </script>
-  <script src="/afterclass/javascript/group.js"></script>
+  <script type="module" src="/afterclass/javascript/group.js"></script>
 </body>
 </html>

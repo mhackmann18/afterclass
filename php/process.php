@@ -67,6 +67,12 @@
 
     }
 
+    // As long as the user is not logging out, refresh the cookie
+    if($action !== 'logout'){
+      $username = $_COOKIE['userid'];
+      setcookie('userid', $username, time() + 1800, "/");
+    }
+
   } else if(!empty($_GET['action'])){
 
     $action = $_GET['action'];
@@ -105,7 +111,7 @@
 
       print getUsernameById($_GET['userid']);
 
-    } else if($action == 'get-feed-posts-by-user'){
+    } else if($action == 'get-logged-in-user-feed-posts'){
 
       $userId = getLoggedInUserId();
       print json_encode(getFeedPostsByUserId($userId));
@@ -117,6 +123,10 @@
       print json_encode($userInfo);
 
     } 
+
+    // Refresh login cookie
+    $username = $_COOKIE['userid'];
+    setcookie('userid', $username, time() + 1800, "/");
   } else {
     print "Invalid action submitted to process.php<br>\n";
   }

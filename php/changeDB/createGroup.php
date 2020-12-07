@@ -1,6 +1,9 @@
 <?php
   function createGroup($userId, $name, $description){
     $mysqli = connectDB();
+
+    $name = $mysqli->real_escape_string($name);
+    $description = $mysqli->real_escape_string($description);
     
     // Stop SQL Injections
     $groupName = $mysqli->real_escape_string($name);

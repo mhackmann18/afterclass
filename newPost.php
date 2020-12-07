@@ -53,7 +53,7 @@
       <div class="middle">
         <div id="post-preview" class="post">
           <div class="post-head">
-            <div class="profile-img-container">
+            <div class="profile-img-container fill">
               <img class="profile-img" src="/afterclass/img/blank-profile.jpg" alt="profile image">
             </div>
             <p class="who-when">(preview) You posted on <span class="post-date"></span></p>
@@ -73,6 +73,6 @@
     <div id="overlay"></div>
   </div>
 
-  <script src="/afterclass/javascript/newPost.js"></script>
+  <script type="module" src="/afterclass/javascript/newPost.js"></script>
 </body>
 </html>

@@ -26,7 +26,7 @@
   <script src="https://kit.fontawesome.com/1b8d9746c3.js" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <link rel="stylesheet" href="/afterclass/css/mainStyles.css">
-  <title>Profile | AfterClass MU</title>
+  <title>AfterClass | Profile</title>
 </head>
 <body>
   <?php
@@ -72,7 +72,7 @@
     <!-- Left column -->
     <div id="profile-left">
       <!-- Will either display the default user or a custom image. -->
-      <div id="profile-page-image-container">
+      <div id="profile-page-image-container" class="fill">
         <?php print $userImage; ?>
       </div>
       <?php if($error){ print "<p id='profile-image-upload-error'>$error</p>"; }?>
@@ -107,7 +107,7 @@
       <h1 id="profile-page-bio-header">Bio</h1>
       <?php
         if(!$userBio){
-          print "<p id='empty-bio'>$userFullName hasn't added a bio.</p>";
+          print "<p id='empty-bio'>You haven't added a bio yet</p>";
         } else {
           print "<p>$userBio</p>";
         }
@@ -142,12 +142,15 @@
               exit;
             }
           }
+          if($result->num_rows == 0)
+            print "<p>You aren't in any groups</p>";
+
           $mysqli->close();
         ?>
       </ul>
     </div>
   </div>
 
-  <script src="/afterclass/javascript/profilePage.js"></script>
+  <script type="module" src="/afterclass/javascript/profilePage.js"></script>
 </body>
 </html>

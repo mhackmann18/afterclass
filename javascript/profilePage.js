@@ -1,19 +1,7 @@
-const changeImgBtn = document.getElementById("change-profile-image");
-const fileForm = document.getElementById("upload-image-form");
-const fileFormBtn = fileForm.querySelector("button");
-const fileFormInput = fileForm.querySelector("input");
-const editProfileBtn = document.getElementById("edit-profile-btn");
-const userInfo = document.getElementById("profile-page-info");
-const bio = document.getElementById("profile-right").querySelector("p");
-const bioInput = document.querySelector("textarea");
-const buttonDiv = document.getElementById("profile-left");
-const cancelEditBtn = document.getElementById("cancel-edit-profile-btn");
-const saveChangesBtn = document.getElementById("save-edit-profile-btn");
-const inputsUl = document.getElementById("profile-page-inputs");
-const usernameInput = document.getElementById("username-input");
-const majorInput = document.getElementById("major-input");
-const inputErrMsg = document.getElementById("input-err-msg");
-const bioErrMsg = document.getElementById("bio-err-msg");
+import { loggedInUserProfilePageElements } from './modules/elements.js';
+import { displayNone, displayBlock } from './modules/utilities.js';
+const { changeImgBtn, fileForm, fileFormBtn, fileFormInput, editProfileBtn, userInfo, bio, bioInput, buttonDiv, cancelEditBtn,saveChangesBtn, inputsUl, usernameInput, majorInput, inputErrMsg, bioErrMsg } = loggedInUserProfilePageElements;
+
 
 // Clear the file input field when the user navigates to the page
 window.addEventListener("pageshow", () => {
@@ -41,102 +29,87 @@ function submitForm(){
 let usernameIsValid = true;
 let bioIsValid = true;
 
-// Edit profile
-editProfileBtn.onclick = function(e){
+// Show edit inputs and buttons
+editProfileBtn.onclick = function(){
   // Hide edit button
-  editProfileBtn.style.display = "none";
+  displayNone(editProfileBtn, bio, userInfo);
+
   // Show cancel and edit buttons
-  cancelEditBtn.style.display = "block";
-  saveChangesBtn.style.display = "block";
-  inputsUl.style.display = "block";
-  // Hide user bio
-  bio.style.display = "none";
-  // Show bio textarea
-  bioInput.style.display = "block";
-  // If there was a bio saved previously, show it in textarea
+  displayBlock(cancelEditBtn, saveChangesBtn, inputsUl, bioInput);
+
+  // If there was a bio saved previously, show it in the textarea
   if(bio.id === "empty-bio"){
     bioInput.value = "";
   } else {
     bioInput.value = bio.innerHTML;
   }
-  // Hide user info
-  userInfo.style.display = "none";
 }
 
 // Will display an error message if chosen username is already associated with another account.
 usernameInput.onkeyup = e => {
   const val = e.target.value;
-  $.post('./php/process.php', { action: 'check-username', username: `${val}` }, res => {
-    // Username is already taken.
+  $.post('./php/process.php', { action: 'check-username', username: val }, res => {
+    // If username is already taken and it's not equal to the old username
     if(!res && val !== document.getElementById("username").innerHTML){
-      inputErrMsg.style.display = "block";
+      displayBlock(inputErrMsg);
       inputErrMsg.innerHTML = "Looks like that username is already taken.<br>Please choose a different username.";
       usernameIsValid = false;
-    } 
-    // Username is good to go
-    else {
-      inputErrMsg.style.display = "none";
+    } else {
+      displayNone(inputErrMsg);
       inputErrMsg.innerHTML = "";
       usernameIsValid = true;
     }
   });
 }
 
+// Check that bio is no longer than 250 chars
 bioInput.onkeyup = e => {
-  const val = e.target.value;
-  const maxLength = 250;
-  if(val.length > maxLength){
+  if(e.target.value.length > 250){
     bioIsValid = false;
-    bioErrMsg.style.display = "block";
-    bioErrMsg.innerHTML = `Bio must be less than ${maxLength} characters`;
+    displayBlock(bioErrMsg);
+    bioErrMsg.innerHTML = `Bio must be less than 250 characters`;
   } else {
-    bioErrMsg.style.display = "none";
+    displayNone(bioErrMsg);
     bioIsValid = true;
   }
 }
 
-// Cancel edit without saving
-cancelEditBtn.onclick = function(e){
+// Close edit inputs without saving
+cancelEditBtn.onclick = function(){
   // Hide cancel and save buttons
-  cancelEditBtn.style.display = "none";
-  saveChangesBtn.style.display = "none";
-  inputsUl.style.display = "none";
-  inputErrMsg.style.display = "none";
-  bioErrMsg.style.display = "none";
+  displayNone(cancelEditBtn, saveChangesBtn, inputsUl, inputErrMsg, bioErrMsg);
+
   // Show necessary elements
-  editProfileBtn.style.display = "block";
-  userInfo.style.display = "block";
-  bio.style.display = "block";
-  bioInput.style.display = "none";
-  // Clear user's text from input
+  displayBlock(editProfileBtn, userInfo, bio, bioInput);
+
+  // Clear user's text from input and show the original values
   usernameInput.value = document.getElementById('username').innerHTML;
   majorInput.value = document.getElementById('major').innerHTML;
 }
 
+// Check that inputs are valid and upload changes to db
 saveChangesBtn.onclick = function(){
   let canSubmit = true;
-  // Get user's input
-  const usernameVal = usernameInput.value;
-  const majorVal = majorInput.value;
-  const bioVal = bioInput.value;
-  // Check username and major
+
+  // Check for username input
   if(!usernameVal){
-    inputErrMsg.style.display = "block";
+    displayBlock(inputErrMsg);
     inputErrMsg.innerHTML = "Please enter a username.";
     canSubmit = false;
   }
-  // Check bio
+  // Check that bio and username are valid
   if(!usernameIsValid || !bioIsValid){
     canSubmit = false;
   }
+  // Check for major input
   if(!majorVal){
-    inputErrMsg.style.display = "block";
+    displayBlock(inputErrMsg);
     inputErrMsg.innerHTML = "Please enter a major.";
     canSubmit = false;
   }
-  // Submit to updateyourProfile.php
+
   if(canSubmit){
-    $.post("./php/process.php", { action: "update-profile", username: usernameVal, major: majorVal, bio: bioVal }, res => {
+    $.post("./php/process.php", { action: "update-profile", username: usernameInput.value, major: majorInput.value, bio: bioInput.value }, res => {
       if(res !== 'logout'){
         window.location.replace("./yourProfile.php");
       } else {

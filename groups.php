@@ -28,6 +28,8 @@
     <!-- Javascript AJAX request will fill this with the user's groups -->
     </section>
 
+    <div class="flex-center"><img src="./img/spinner.gif" alt="loading..." class="margin-top-lrg" id="spinner"></div>
+
     <!-- Popup group creation form -->
     <form method="POST" id="create-group-form" action="/afterclass/php/process.php">
       <button id="cancel-create-group-btn">
@@ -54,6 +56,6 @@
 
   <div id="overlay"></div>
 
-  <script src="./javascript/groupsPage.js"></script>
+  <script type="module" src="./javascript/groupsPage.js"></script>
 </body>
 </html>
