@@ -19,6 +19,7 @@
     if($action == 'logout'){
 
       setcookie('userid', '', 1, "/");
+      print "Dsdnsjnsd";
 
     } else if($action == 'check-email'){
 
@@ -41,19 +42,19 @@
       $userId = getLoggedInUserId();
       addUserToGroup($userId, $groupId);
 
-    } if($action == "create-new-group"){
+    } else if($action == "create-new-group"){
 
       require_once "./changeDB/createGroup.php";
       $userId = getLoggedInUserId();
       createGroup($userId, $_POST['group-name'], $_POST['description']) ? header("location: ../groups.php") : print "404: An error occured";
 
-    } if($action == "create-new-post"){
+    } else if($action == "create-new-post"){
 
       require_once "./changeDB/createPost.php";
       $userId = getLoggedInUserId();
       createPost($userId, $_POST['group-name'], $_POST['post-body'], $_POST['yt-link'], $_FILES['file']);
 
-    } if($action == "update-profile"){
+    } else if($action == "update-profile"){
 
       require_once "./changeDB/updateProfile.php";
       $userId = getLoggedInUserId();

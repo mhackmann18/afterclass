@@ -7,7 +7,7 @@ const spinner = document.getElementById("spinner");
 document.querySelector('body').onload = async function(){
   displayBlock(spinner);
   let posts = JSON.parse(await $.get("./php/process.php", { action: 'get-logged-in-user-feed-posts' }));
-
+  
   if(posts.length){
     for(let post of posts){
       await showPost(post, feedDiv, true);
