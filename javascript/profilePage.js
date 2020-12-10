@@ -1,6 +1,6 @@
 import { loggedInUserProfilePageElements } from './modules/elements.js';
 import { displayNone, displayBlock } from './modules/utilities.js';
-const { changeImgBtn, fileForm, fileFormBtn, fileFormInput, editProfileBtn, userInfo, bio, bioInput, buttonDiv, cancelEditBtn,saveChangesBtn, inputsUl, usernameInput, majorInput, inputErrMsg, bioErrMsg } = loggedInUserProfilePageElements;
+const { changeImgBtn, fileForm, fileFormBtn, fileFormInput, editProfileBtn, userInfo, bio, bioInput, buttonDiv, cancelEditBtn, saveChangesBtn, inputsUl, usernameInput, majorInput, inputErrMsg, bioErrMsg } = loggedInUserProfilePageElements;
 
 
 // Clear the file input field when the user navigates to the page
@@ -77,10 +77,10 @@ bioInput.onkeyup = e => {
 // Close edit inputs without saving
 cancelEditBtn.onclick = function(){
   // Hide cancel and save buttons
-  displayNone(cancelEditBtn, saveChangesBtn, inputsUl, inputErrMsg, bioErrMsg);
+  displayNone(cancelEditBtn, saveChangesBtn, inputsUl, inputErrMsg, bioErrMsg, bioInput);
 
   // Show necessary elements
-  displayBlock(editProfileBtn, userInfo, bio, bioInput);
+  displayBlock(editProfileBtn, userInfo, bio);
 
   // Clear user's text from input and show the original values
   usernameInput.value = document.getElementById('username').innerHTML;
