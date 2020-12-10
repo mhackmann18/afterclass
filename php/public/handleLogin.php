@@ -20,8 +20,8 @@
 
   if($result){
     if($result->num_rows == 1){
-      setcookie('userid', $username, time() + 1800, "/");
-      $_COOKIE['userid'] = $username;
+      session_start();
+      $_SESSION['username'] = $username;
       print "Logged in successfully";
     } else {
       print("Incorrect username or password.<br>Please double-check your username and password.");

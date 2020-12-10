@@ -1,4 +1,6 @@
 <?php
+  if(session_id() == "")
+    session_start();
   require "../../config/db.conf";
 
   // If database connection fails
@@ -7,7 +9,7 @@
   } 
 
   // Makes sure there is no user logged in
-  if(isset($_COOKIE['userid'])){
+  if(isset($_SESSION['username'])){
     header("location: ../../index.php");
     exit;
   }
@@ -41,7 +43,7 @@
       $mysqli->query($query);
     }
 
-    setcookie('userid', $username, time() + 1800, "/");
+    $_SESSION['username'] = $username;
     header("location: ../../index.php");
   } 
   // If there was an issue adding the user to database, display error and redirect to createAccount.php

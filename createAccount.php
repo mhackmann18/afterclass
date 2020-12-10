@@ -1,7 +1,11 @@
 <!-- HTTPS Redirect -->
 <?php 
+  if(session_id() == "")
+    session_start();
+    
   require $_SERVER["DOCUMENT_ROOT"] . "/afterclass/php/redirect.php"; 
-  if(isset($_COOKIE['userid']))
+
+  if(isset($_SESSION['username']))
     header("location: index.php");
 ?>
 

@@ -1,4 +1,7 @@
 <?php 
+  if(session_id() == "")
+    session_start();
+    
   // HTTPS Redirect
   require "./php/redirect.php";
 
@@ -8,12 +11,8 @@
     exit("There was an issue connecting to the database.<br>Please try again later.");
 
   // Make sure the user is logged in, redirect if not
-  if(!isset($_COOKIE['userid']))
+  if(!isset($_SESSION['username']))
     header("location: login.php");
-
-  // Refresh the time on the login cookie
-  $username = $_COOKIE['userid'];
-  setcookie('userid', $username, time() + 1800, "/");
 ?>
 
 <!DOCTYPE html>

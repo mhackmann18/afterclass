@@ -1,14 +1,13 @@
 <?php 
+  if(session_id() == "")
+    session_start();
   // HTTPS Redirect
   require $_SERVER["DOCUMENT_ROOT"] . "/afterclass/php/redirect.php";
   // Make sure the user is logged in, redirect if not
-  if(!isset($_COOKIE['userid']))
+  if(!isset($_SESSION['username']))
     header("location: login.php");
-  // Refresh the time on the login cookie
-  $username = $_COOKIE['userid'];
-  setcookie('userid', $username, time() + 1800, "/");
 ?>
-
+ 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,7 +38,7 @@
         <div>
           <label id="post-img-btn" for="file-upload" class="btn-gold btn">Add Image</label>
           <input name="file" id="file-upload" type="file"/> or 
-          <input id="yt-link-input" type="text" placeholder="Add youtube video by link">
+          <input name="yt-link" id="yt-link-input" type="text" placeholder="Add youtube video by link">
         </div>
         <div>
           <button id="preview-new-post-btn" class="btn btn-gold">Continue to Post</button>

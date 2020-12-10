@@ -1,7 +1,7 @@
 <?php
   function createPost($userId, $postGroupId, $postText, $postLink, $file){
     $mysqli = connectDB();
-
+    
     $postText = $mysqli->real_escape_string($postText);
 
     // If a youtube video is being uploaded

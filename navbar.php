@@ -22,7 +22,7 @@
     <div id="user-menu">
       <p>Logged in as:<br>
         <?php
-          print "<span class='txt-dark txt-bold'>" . $_COOKIE['userid'] . "</span>";
+          print "<span class='txt-dark txt-bold'>" . $_SESSION['username'] . "</span>";
         ?>
       </p>
       <hr>

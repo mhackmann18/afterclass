@@ -25,12 +25,6 @@ function displayNone(...args){
     el.style.display = "none";
 }
 
-function getCookie(name) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(';').shift();
-}
-
 function getUIDateStringFromDBDate(dateString){
   let dateParts = dateString.split("-");
   let year = dateParts[0].slice(-2);
@@ -41,7 +35,6 @@ export {
   changeWatchLinkToEmbedLink, 
   getCurrentDateString, 
   displayBlock, 
-  displayNone, 
-  getCookie, 
+  displayNone,
   getUIDateStringFromDBDate 
 };

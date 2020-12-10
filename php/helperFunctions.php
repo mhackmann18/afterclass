@@ -19,12 +19,15 @@
   }
 
   function getLoggedInUserId(){
+    if(session_id() == "")
+      session_start();
+
     require "../config/db.conf";
 
     if($mysqli->connect_error)
       exit("There was an issue connecting to the database.<br>");
 
-    $username = $_COOKIE['userid'];
+    $username = $_SESSION['username'];
 
     $result = $mysqli->query("SELECT * FROM users WHERE username = '$username'");
 
@@ -48,8 +51,10 @@
   }
 
   function redirectIfNotLoggedIn(){
+    if(session_id() == "")
+      session_start();
     // Make sure user is logged in
-    if(!isset($_COOKIE['userid'])){
+    if(!isset($_SESSION['username'])){
       header("location: ../login.php");
       exit;
     }

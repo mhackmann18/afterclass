@@ -31,10 +31,9 @@ function showConfirmationWindow(){
 
     reader.onload = function(e){
       if(fileInput.value.slice(-3) === "pdf"){
-        mediaDiv.innerHTML = `<embed src=${e.target.result} id="post-preview-file-display"/>`;
-        document.getElementById("post-preview-file-display").style.height = `${document.getElementById("post-preview-file-display").offsetWidth*1.3}px`;
+        mediaDiv.innerHTML = `<div class="padding-sides-mid"><div class="pdf-container"><embed src=${e.target.result} id="post-preview-file-display"/></div></div>`;
       } else {
-        mediaDiv.innerHTML = `<div class="flex-center"><img id="post-preview-file-display" src=${e.target.result} alt="post-picture"></img></div>`;
+        mediaDiv.innerHTML = `<div class="flex-center post-img-container"><img id="post-preview-file-display" src=${e.target.result} alt="post-picture"></img></div>`;
       }
     }
     // If the post has an embedded youtube video

@@ -1,4 +1,4 @@
-import { getUIDateStringFromDBDate, getCookie } from './utilities.js';
+import { getUIDateStringFromDBDate } from './utilities.js';
 import { getUsernameById, getGroupNameById, hasProfileImg } from './dbController.js';
 
 async function showPost(post, div, showGroup){
@@ -71,11 +71,11 @@ function getPostMediaDivInnerHTML(post){
 async function getProfileLinkElement(userId){
   // Link to logged in user's page if the post was created by them
   const username = await getUsernameById(userId);
-  if(username === getCookie('userid')){
-    return `<a href="./yourProfile.php" class="txt-darkgrey">You</a>`
-  } else {
-    return `<a href="./profile.php?userid=${userId}" class="txt-darkgrey">${username}</a>`;
-  }
+  // if(username === "JSJNJUDIUJIJIUJI"){
+  //   return `<a href="./yourProfile.php" class="txt-darkgrey">You</a>`
+  // } else {
+  return `<a href="./profile.php?userid=${userId}" class="txt-darkgrey">${username}</a>`;
+  // }
 }
 
 async function getProfileImgSrc(userId){

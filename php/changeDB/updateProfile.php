@@ -1,5 +1,8 @@
 <?php
   function updateUserProfile($userId, $newUsername, $newMajor, $newBio){
+    if(session_id() == "")
+      session_start();
+
     $mysqli = connectDB();
 
     $newUsername = $mysqli->real_escape_string($newUsername);
@@ -13,7 +16,7 @@
       exit("Error. Please contact the system administrator.");
     }
 
-    setcookie('userid', $newUsername, time() + 1800, "/");
+    $_SESSION['username'] = $newUsername;
 
     $mysqli->close();
   }

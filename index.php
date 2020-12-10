@@ -1,12 +1,10 @@
 <?php
+  if(session_id() == "")
+    session_start();
   // Redirect to login page if no login cookie exists
-  if(!isset($_COOKIE['userid']))
+  if(!isset($_SESSION['username']))
     header("location: login.php");
-
-  // If user is logged in, refresh the login cookie
-  $username = $_COOKIE['userid'];
-  setcookie('userid', $username, time() + 1800, "/");
-
+    
   // HTTPS Redirect
   require "/var/www/html/afterclass/php/redirect.php";
 ?>

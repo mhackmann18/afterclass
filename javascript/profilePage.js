@@ -92,7 +92,7 @@ saveChangesBtn.onclick = function(){
   let canSubmit = true;
 
   // Check for username input
-  if(!usernameVal){
+  if(!usernameInput.value){
     displayBlock(inputErrMsg);
     inputErrMsg.innerHTML = "Please enter a username.";
     canSubmit = false;
@@ -102,7 +102,7 @@ saveChangesBtn.onclick = function(){
     canSubmit = false;
   }
   // Check for major input
-  if(!majorVal){
+  if(!majorInput.value){
     displayBlock(inputErrMsg);
     inputErrMsg.innerHTML = "Please enter a major.";
     canSubmit = false;

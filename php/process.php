@@ -1,11 +1,13 @@
 <?php 
+  session_start();
+
   require_once './helperFunctions.php';
   require_once './readDB/readDB.php';
   require_once './changeDB/updateDB.php';
   require_once './getFromDB/getData.php';
   
   // Make sure user is logged in
-  if(!isset($_COOKIE['userid'])){
+  if(!isset($_SESSION['username'])){
     header("location: ../login.php");
     exit;
   }
@@ -18,8 +20,8 @@
 
     if($action == 'logout'){
 
-      setcookie('userid', '', 1, "/");
-      print "Dsdnsjnsd";
+      session_unset();
+      session_destroy();
 
     } else if($action == 'check-email'){
 
@@ -66,12 +68,6 @@
       $userId = getLoggedInUserId();
       uploadProfileImg($userId, $_FILES['file']);
 
-    }
-
-    // As long as the user is not logging out, refresh the cookie
-    if($action !== 'logout'){
-      $username = $_COOKIE['userid'];
-      setcookie('userid', $username, time() + 1800, "/");
     }
 
   } else if(!empty($_GET['action'])){
@@ -124,10 +120,7 @@
       print json_encode($userInfo);
 
     } 
-
-    // Refresh login cookie
-    $username = $_COOKIE['userid'];
-    setcookie('userid', $username, time() + 1800, "/");
+    
   } else {
     print "Invalid action submitted to process.php<br>\n";
   }
