@@ -6,7 +6,7 @@
     header("location: login.php");
     
   // HTTPS Redirect
-  require "/var/www/html/afterclass/php/redirect.php";
+  // require "/var/www/html/afterclass/php/redirect.php";
 ?>
 
 <!DOCTYPE html>

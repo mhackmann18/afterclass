@@ -1,5 +1,5 @@
 <?php 
-  require $_SERVER["DOCUMENT_ROOT"] . "/afterclass/php/redirect.php"; 
+  // require $_SERVER["DOCUMENT_ROOT"] . "/afterclass/php/redirect.php"; 
 ?>
 
 <!DOCTYPE html>

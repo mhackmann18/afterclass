@@ -3,7 +3,7 @@
   if(session_id() == "")
     session_start();
     
-  require $_SERVER["DOCUMENT_ROOT"] . "/afterclass/php/redirect.php"; 
+  // require $_SERVER["DOCUMENT_ROOT"] . "/afterclass/php/redirect.php"; 
 
   if(isset($_SESSION['username']))
     header("location: index.php");

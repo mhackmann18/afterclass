@@ -3,7 +3,7 @@
     session_start();
 
   // HTTPS Redirect
-  require $_SERVER["DOCUMENT_ROOT"] . "/afterclass/php/redirect.php";
+  // require $_SERVER["DOCUMENT_ROOT"] . "/afterclass/php/redirect.php";
 
   // Make sure the user is logged in, redirect if not
   if(!isset($_SESSION['username']))

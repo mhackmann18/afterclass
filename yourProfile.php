@@ -3,7 +3,7 @@
     session_start();
 
   // HTTPS Redirect
-  require $_SERVER["DOCUMENT_ROOT"]."/afterclass/php/redirect.php";
+  // require $_SERVER["DOCUMENT_ROOT"]."/afterclass/php/redirect.php";
 
   // Connect to db, check for error
   require_once $_SERVER["DOCUMENT_ROOT"]."/afterclass/config/db.conf";

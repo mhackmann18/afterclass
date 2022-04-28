@@ -3,7 +3,7 @@
     session_start();
     
   // HTTPS Redirect
-  require "./php/redirect.php";
+  // require "./php/redirect.php";
 
   // Connect to db, check for error
   require_once "./config/db.conf";
