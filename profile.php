@@ -22,11 +22,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://kit.fontawesome.com/1b8d9746c3.js" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <link rel="stylesheet" href="/afterclass/css/mainStyles.css">
+  <link rel="stylesheet" href="/projects/afterclass/css/mainStyles.css">
   <title>AfterClass | Profile</title>
 </head>
 <body>
-  <?php require '/var/www/html/afterclass/navbar.php'; ?>
+  <?php require '/var/www/html/projects/afterclass/navbar.php'; ?>
 
   <div class="container">
     <div id="profile-left">
@@ -51,6 +51,6 @@
   <script type="text/javascript">
     const userId = <?=$_GET['userid']?>;
   </script>
-  <script src="/afterclass/javascript/profile.js"></script>
+  <script src="/projects/afterclass/javascript/profile.js"></script>
 </body>
 </html>

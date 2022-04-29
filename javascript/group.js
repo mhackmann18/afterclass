@@ -10,7 +10,7 @@ document.querySelector('body').onload = async function(){
   displayBlock(spinner);
 
   showGroupCardInfo(groupId, groupCard);
-  const posts = JSON.parse(await $.get("/afterclass/php/process.php", { action: 'get-posts-by-group-id', groupid: groupId }));
+  const posts = JSON.parse(await $.get("/projects/afterclass/php/process.php", { action: 'get-posts-by-group-id', groupid: groupId }));
 
   for(let post of posts)
     await showPost(post, feedDiv, false);
@@ -23,7 +23,7 @@ document.querySelector('body').onload = async function(){
 
 // Display the group's data into the passed in card div
 function showGroupCardInfo(groupId, card){
-  $.get("/afterclass/php/process.php", { action: "get-group-info", groupid: groupId }, res => {
+  $.get("/projects/afterclass/php/process.php", { action: "get-group-info", groupid: groupId }, res => {
     const { name, description, numMembers, numPosts, dateCreated } = JSON.parse(res);
     card.querySelector("h1").innerHTML = name;
     card.querySelector(".group-page-desc").innerHTML = description;

@@ -7,7 +7,7 @@ document.querySelector("body").onload = () => {
   // Populate groups list
   $.get("./php/process.php", { action: "get-membership-ids", userid: userId }, res => JSON.parse(res).forEach(groupId => {
     $.get("./php/process.php", { action: "get-group-info", groupid: groupId }, res => {
-      document.getElementById("profile-page-groups").innerHTML += `<li><a href='/afterclass/group.php?groupid=${groupId}'>${JSON.parse(res).name}</a></li>`;
+      document.getElementById("profile-page-groups").innerHTML += `<li><a href='/projects/afterclass/group.php?groupid=${groupId}'>${JSON.parse(res).name}</a></li>`;
     });
   }));
   // Load user's profile img if they have one

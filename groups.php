@@ -1,8 +1,7 @@
 <?php 
   if(session_id() == "")
     session_start();
-  // HTTPS Redirect
-  // require $_SERVER["DOCUMENT_ROOT"] . "/afterclass/php/redirect.php";
+    
   // Make sure the user is logged in, redirect if not
   if(!isset($_SESSION['username']))
     header("location: login.php");
@@ -30,7 +29,7 @@
     <div class="flex-center"><img src="./img/spinner.gif" alt="loading..." class="margin-top-lrg" id="spinner"></div>
 
     <!-- Popup group creation form -->
-    <form method="POST" id="create-group-form" action="/afterclass/php/process.php">
+    <form method="POST" id="create-group-form" action="/projects/afterclass/php/process.php">
       <button id="cancel-create-group-btn">
         <i class="fas fa-times"></i>
       </button>

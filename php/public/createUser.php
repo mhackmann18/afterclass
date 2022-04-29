@@ -30,18 +30,13 @@
 
   $query = "INSERT INTO users (fullName, email, username, userPassword, major, addDate) VALUES ('$name', '$email', '$username', sha1('$password'), '$major', now())";
 
+  // $query = "SELECT * FROM users";
+  
   // If user was successfully added to database, set profile image to default, create login cookie and redirect to index.php
   if($mysqli->query($query)){
 
     $query = "SELECT * FROM users WHERE username = '$username'";
     $result = $mysqli->query($query);
-
-    if($result->num_rows == 1){
-      $row = mysqli_fetch_assoc($result);
-      $userid = $row['id'];
-      $query = "INSERT INTO profileimg (userid, status) VALUES ('$userid', 1)";
-      $mysqli->query($query);
-    }
 
     $_SESSION['username'] = $username;
     header("location: ../../index.php");
@@ -55,8 +50,10 @@
     // If email was already taken
     } else {
       $error = "An account already exists using that email.<br>Please use another email.";
-    }
-    require "/var/www/html/afterclass/createAccount.php";
+    } 
+    header("location: https://matthackmann.com/projects/afterclass/createAccount.php");
+    $mysqli->close();
+    // require "../../createAccount.php";
   }
 
   $mysqli->close();

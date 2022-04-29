@@ -4,7 +4,7 @@ const noGroupsMsg = document.getElementById("find-groups-no-groups");
 
 document.querySelector("body").onload = function(){
   spinner.style.display = "block";
-  $.get("/afterclass/php/process.php", { action: "get-no-membership-ids" }, res => {
+  $.get("/projects/afterclass/php/process.php", { action: "get-no-membership-ids" }, res => {
     const ids = JSON.parse(res);
     if(ids[0] != 0){
       ids.forEach(id => showGroupCard(Number(id)));
@@ -16,7 +16,7 @@ document.querySelector("body").onload = function(){
 }
 
 function showGroupCard(id){
-  $.get("/afterclass/php/process.php", { action: "get-group-info", groupid: id }, res => {
+  $.get("/projects/afterclass/php/process.php", { action: "get-group-info", groupid: id }, res => {
     const group = JSON.parse(res);
     const card = document.createElement("div");
     card.classList.add("group-page-info");
@@ -42,6 +42,6 @@ function addJoinEvent(cardDiv, groupId){
   const joinBtn = cardDiv.querySelector('button');
 
   joinBtn.onclick = function(e){
-    $.post('/afterclass/php/process.php', { action: "add-new-membership", groupid: groupId }, () => window.location.replace(`/afterclass/group.php?groupid=${groupId}`));
+    $.post('/projects/afterclass/php/process.php', { action: "add-new-membership", groupid: groupId }, () => window.location.replace(`/projects/afterclass/group.php?groupid=${groupId}`));
   }
 }

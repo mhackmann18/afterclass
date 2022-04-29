@@ -4,9 +4,6 @@
   // Redirect to login page if no login cookie exists
   if(!isset($_SESSION['username']))
     header("location: login.php");
-    
-  // HTTPS Redirect
-  // require "/var/www/html/afterclass/php/redirect.php";
 ?>
 
 <!DOCTYPE html>

@@ -35,7 +35,7 @@
         if($fileError === 0){
           if($fileSize < 1000000) {
             $fileNameNew = uniqid().".".$fileActualExt;
-            $fileDestination = "/var/www/html/afterclass/uploads/".$fileNameNew;
+            $fileDestination = "/var/www/html/projects/afterclass/uploads/".$fileNameNew;
             if(copy($fileTmpName, $fileDestination)){
               $query = "INSERT INTO userPosts (userid, groupid, postText, fileName, addDate) VALUES ($userId, $postGroupId, '$postText', '$fileNameNew', now())";
               if(!$mysqli->query($query)){

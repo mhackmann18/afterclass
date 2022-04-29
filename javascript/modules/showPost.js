@@ -62,7 +62,7 @@ function getPostMediaDivInnerHTML(post){
   } else if(type === "pdf"){
     return `<div class="padding-sides-mid"><div class="pdf-container"><embed src="./uploads/${fileName}"/></div></div>`;
   } else if(type === "img"){
-    return `<div class="post-img-container flex-center"><img src="/afterclass/uploads/${fileName}" alt="posted image"></div>`;
+    return `<div class="post-img-container flex-center"><img src="/projects/afterclass/uploads/${fileName}" alt="posted image"></div>`;
   } else {
     return "";
   }
@@ -81,9 +81,9 @@ async function getProfileLinkElement(userId){
 async function getProfileImgSrc(userId){
   const hasImg = await hasProfileImg(userId);
   if(hasImg){
-    return `/afterclass/uploads/profile${userId}.jpg`;
+    return `/projects/afterclass/uploads/profile${userId}.jpg`;
   } else {
-    return `/afterclass/img/blank-profile.jpg`;
+    return `/projects/afterclass/img/blank-profile.jpg`;
   }
 }
 

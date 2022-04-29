@@ -8,7 +8,7 @@ displayNone(previewContainer);
 
 // Load the user's groups into the form select
 document.querySelector("body").onload = function(){
-  $.get("/afterclass/php/process.php", { action: 'get-membership-ids' }, res => 
+  $.get("/projects/afterclass/php/process.php", { action: 'get-membership-ids' }, res => 
   JSON.parse(res).forEach(async id => {
     let name = await getGroupNameById(Number(id));
     groupSelect.innerHTML += `<option value='${id}'>${name}</option>`;

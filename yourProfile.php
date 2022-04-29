@@ -2,11 +2,9 @@
   if(session_id() == "")
     session_start();
 
-  // HTTPS Redirect
-  // require $_SERVER["DOCUMENT_ROOT"]."/afterclass/php/redirect.php";
-
   // Connect to db, check for error
-  require_once $_SERVER["DOCUMENT_ROOT"]."/afterclass/config/db.conf";
+  require_once $_SERVER["DOCUMENT_ROOT"]."/projects/afterclass/config/db.conf";
+  
   if($mysqli->connect_error){
     print "There was an issue connecting to the database.<br>Please try again later.";
     exit;
@@ -26,7 +24,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://kit.fontawesome.com/1b8d9746c3.js" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <link rel="stylesheet" href="/afterclass/css/mainStyles.css">
+  <link rel="stylesheet" href="/projects/afterclass/css/mainStyles.css">
   <title>AfterClass | Profile</title>
 </head>
 <body>
@@ -46,28 +44,29 @@
       $userBio = $row['bio'];
 
       // See if the user has uploaded a profile image
-      $query = "SELECT * FROM profileimg WHERE userid = '$id'";
+      $query = "SELECT * FROM users WHERE id = '$id'";
       $result = $mysqli->query($query);
       if(!$result){
         print "Error. Please contact the system administrator.";
         exit; 
       }
       $row = mysqli_fetch_assoc($result);
+      print $row['profile_image'];
 
       // If user uploaded an image, display i
-      if($row['status'] == 0){
-        $userImage = "<img src='/afterclass/uploads/profile".$id.".jpg?'".mt_rand()." alt='profile-image'>";
+      if($row['profile_image'] == 0){
+        $userImage = "<img src='/projects/afterclass/uploads/profile".$id.".jpg?'".mt_rand()." alt='profile-image'>";
       } 
       // If user didn't upload an image, display default
       else {
-        $userImage = "<img src='/afterclass/img/blank-profile.jpg' alt='blank-profile-image'>";
+        $userImage = "<img src='/projects/afterclass/img/blank-profile.jpg' alt='blank-profile-image'>";
       }
     } else {
       print "Error. Please contact the system administrator.";
       exit; 
     }
   ?>
-  <?php require $_SERVER["DOCUMENT_ROOT"] . '/afterclass/navbar.php'; ?>
+  <?php require $_SERVER["DOCUMENT_ROOT"] . '/projects/afterclass/navbar.php'; ?>
 
   <div class="container">
     <!-- Left column -->
@@ -80,7 +79,7 @@
       <!-- Button to change profile pic -->
       <button id="change-profile-image" title="Change profile picture"><i class="fas fa-camera fa-2x"></i></button>
       <!-- Hidden form with file input is submitted by the change-profile-image button via javascript -->
-      <form id="upload-image-form" action="/afterclass/php/process.php" method="POST" enctype="multipart/form-data" style="display:none;">
+      <form id="upload-image-form" action="/projects/afterclass/php/process.php" method="POST" enctype="multipart/form-data" style="display:none;">
         <input type="file" name="file">
         <button type="submit" name="action" value="upload-profile-img">Upload Image</button>
       </form>
@@ -137,7 +136,7 @@
             if($nameResult->num_rows == 1){
               $nameRow = mysqli_fetch_assoc($nameResult);
               $name = $nameRow['groupName'];
-              print "<li><a href='/afterclass/group.php?groupid=$groupId'>$name</a></li>";
+              print "<li><a href='/projects/afterclass/group.php?groupid=$groupId'>$name</a></li>";
             } else {
               print "There was an issue getting group data.<br>Please contact system administrator.";
               exit;
@@ -152,6 +151,6 @@
     </div>
   </div>
 
-  <script type="module" src="/afterclass/javascript/profilePage.js"></script>
+  <script type="module" src="/projects/afterclass/javascript/profilePage.js"></script>
 </body>
 </html>

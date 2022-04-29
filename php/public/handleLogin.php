@@ -1,9 +1,9 @@
 <?php
+  // Connect to DB
   require "../../config/db.conf";
 
-  // If database connection fails
   if($mysqli->connect_error){
-    exit("Failed to connect to database.");
+    exit($mysqli->connect_error);
   } 
 
   $username = empty($_POST['username']) ? '' : $_POST['username'];

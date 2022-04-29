@@ -84,7 +84,7 @@ document.getElementById("cancel-create-group-btn").onclick = function(e){
 
 // Check that group name isn't taken
 nameInput.onkeyup = function(e){
-  $.post("/afterclass/php/process.php", { action: 'check-group-name', name: e.target.value }, res => {
+  $.post("/projects/afterclass/php/process.php", { action: 'check-group-name', name: e.target.value }, res => {
     if(!res){
       nameIsValid = false;
       displayBlock(createGroupErr);

@@ -1,8 +1,7 @@
 <?php 
   if(session_id() == "")
     session_start();
-  // HTTPS Redirect
-  // require $_SERVER["DOCUMENT_ROOT"] . "/afterclass/php/redirect.php";
+
   // Make sure the user is logged in, redirect if not
   if(!isset($_SESSION['username']))
     header("location: login.php");
@@ -22,7 +21,7 @@
   <?php require 'navbar.php'; ?>
   <div class="container">
 
-    <form id="new-post-form" action="/afterclass/php/process.php" method="POST" enctype="multipart/form-data">
+    <form id="new-post-form" action="/projects/afterclass/php/process.php" method="POST" enctype="multipart/form-data">
       <input hidden name="action" value="create-new-post">
       <div class="space-between padding-bottom-mid">
         <h1 id="new-post-header">New Post</h1>
@@ -53,7 +52,7 @@
         <div id="post-preview" class="post">
           <div class="post-head">
             <div class="profile-img-container fill">
-              <img class="profile-img" src="/afterclass/img/blank-profile.jpg" alt="profile image">
+              <img class="profile-img" src="/projects/afterclass/img/blank-profile.jpg" alt="profile image">
             </div>
             <p class="who-when">(preview) You posted on <span class="post-date"></span></p>
           </div>
@@ -72,6 +71,6 @@
     <div id="overlay"></div>
   </div>
 
-  <script type="module" src="/afterclass/javascript/newPost.js"></script>
+  <script type="module" src="/projects/afterclass/javascript/newPost.js"></script>
 </body>
 </html>
