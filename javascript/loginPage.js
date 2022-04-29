@@ -4,6 +4,7 @@ const passwordField = form.querySelector('input[type="password"]');
 const submitBtn = form.querySelector('button');
 const errorMsg = document.querySelector('.error-msg');
 
+alert("Please do enter any sensitive information while testing this application. It is for demonstrative purposes and does not use secure encryption methods.");
 
 form.onsubmit = e => {
   const userString = userField.value;

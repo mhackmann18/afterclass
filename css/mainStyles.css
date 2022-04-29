@@ -80,6 +80,14 @@ input {
 /* || UTILITIES */
 /****************/
 
+#back-to-site {
+  position: fixed;
+  left: 10px;
+  top: 10px;
+  color: black;
+  text-decoration: underline;
+}
+
 .underline { text-decoration: underline; }
 
 .pdf-container {

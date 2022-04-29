@@ -8,6 +8,7 @@
   <title>Log In | AfterClass MU</title>
 </head>
 <body class="flex-center">
+  <a href="/" id="back-to-site">Back to portfolio</a>
   <div class="log-in-box">
   
     <!-- Container for header and MU logo -->
