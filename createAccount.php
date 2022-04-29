@@ -32,7 +32,6 @@
     </form>
 
     <p id="create-account">Already have an account? <a href="./login.php">Log In</a></p>
-    <p class="create-account-error">Please do enter any sensitive information. This application is for demonstrative purposes and does not use secure  encryption methods.</p>
     <!-- Will display error message from createUser.php if the operation failed. -->
     <?php
       if($error){
