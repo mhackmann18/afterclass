@@ -17,6 +17,7 @@
   <title>Log In | AfterClass MU</title>
 </head>
 <body class="flex-center">
+  <a href="/" id="back-to-site">Back to portfolio</a>
   <div id="create-user-box" class="log-in-box">
 
     <h1>Create New Account</h1>
