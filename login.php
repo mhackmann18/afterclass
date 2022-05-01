@@ -1,3 +1,30 @@
+<?php
+  // **************** //
+  // This php code gets the test user's password so it can prefill the username input
+  // **************** //
+
+  // Connect to DB
+  require "./config/db.conf";
+
+  if($mysqli->connect_error){
+    exit($mysqli->connect_error);
+  } 
+  
+  // Get test user's username
+  $query = "SELECT * FROM users WHERE id=1";
+  $result = $mysqli->query($query);
+  
+  if($result){
+    $row = mysqli_fetch_assoc($result);
+    $username = $row['username'];
+  } else {
+    print("Error. Please contact the system administrator");
+  }
+
+  $result->close();
+  $mysqli->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,8 +46,8 @@
 
     <!-- Login form -->
     <form autocomplete="off">
-      <input id="username" type="text" name="user-name" placeholder="username">
-      <input id="password" type="password" name="password" placeholder="password">
+      <input id="username" type="text" name="user-name" placeholder="username" value=<?php print $username?>>
+      <input id="password" type="password" name="password" placeholder="password" value="1234">
       <button>Log In</button>
     </form>
 
