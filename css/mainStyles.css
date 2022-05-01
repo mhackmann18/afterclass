@@ -1033,3 +1033,9 @@ iframe#post-preview-video {
 p#feed-no-posts-msg {
   margin-top: 100px;
 }
+
+#jpg-msg {
+  margin-top: 12px;
+  color: gray;
+  font-size: 12px;
+}

@@ -43,6 +43,7 @@
           <button id="preview-new-post-btn" class="btn btn-gold">Continue to Post</button>
         </div>
       </div>
+      <p id="jpg-msg">Images must be no larger than 1 MB and have a .jpg file extension</p>
       <p id="post-err-msg" class="err-msg"></p>
     </form>
 
